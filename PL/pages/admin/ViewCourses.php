@@ -111,7 +111,7 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Etudiants</h4>
 
-                                    <div class="table-responsive">
+                                    <div class="table-responsive"> 
                                         <table class="table table-striped">
                                             <?php
                                             require_once('../../../BLL/usersManager.php');

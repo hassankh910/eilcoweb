@@ -49,16 +49,45 @@ function GetCours()
     return $cours;
 }
 
+function getCoursId($cour_id)
+{
+    $conn = openConnection();
+
+    $cour = null;
+
+    $query = "select * from cours where idcours=?;";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $cour_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if (mysqli_num_rows($result) == false) {
+        closeConnection($conn);
+        return null;
+    }
+    if ($row = mysqli_fetch_array($result)) {
+        $cour = new cour();
+        $cour->setId($row["idcours"]);
+        $cour->setNom($row["nom"]);
+        $cour->setAbreviation($row["abreviation"]);
+        $cour->setProf_id($row["prof_id"]);
+        $cour->setFormation_id($row["formation_id"]);
+        $cour->setNb_credits($row["credits"]);
+    }
+    closeConnection($conn);
+    return $cour;
+}
+
 function getCoursbystudentId($student_id)
 {
     $conn = openConnection();
 
     $cours = null;
 
-    $query = "select cours.* from users,cours where cours.formation_id=users.formation_id and users.iduser=5;";
-    // $stmt = $conn->prepare($query);
-    // $stmt->bind_param("i",$student_id);
-    $result = mysqli_query($conn, $query);
+    $query = "select cours.* from users,cours where cours.formation_id=users.formation_id and users.iduser=?;";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $student_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
     if (mysqli_num_rows($result) == false) {
         closeConnection($conn);
         return null;
@@ -77,4 +106,26 @@ function getCoursbystudentId($student_id)
     }
     closeConnection($conn);
     return $cours;
+}
+
+function getCoursGrade($student_id, $cours_id)
+{
+    $conn = openConnection();
+    $note = null;
+
+    try {
+        $sql = "select note from notes where cours_id=? and etudiant_id =?;"; // SQL with parameters
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $cours_id, $student_id);
+        $stmt->execute();
+        $result = $stmt->get_result(); // get the mysqli result
+        if ($result->num_rows > 0) {
+            if ($row = $result->fetch_assoc()) {
+                $note = $row["note"];
+            }
+        }
+        closeConnection($conn);
+    } catch (Exception $ex) {
+    }
+    return $note;
 }

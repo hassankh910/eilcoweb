@@ -26,7 +26,6 @@ function GetFormations()
     $query = "SELECT * FROM formation;";
     $result = mysqli_query($conn, $query);
     if (mysqli_num_rows($result) == false) {
-    echo "alert('pipipipipi.');";
         closeConnection($conn);
         return null;
     }

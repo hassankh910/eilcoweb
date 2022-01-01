@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . "/../DTO/presence.php");
 require_once(__DIR__ . "/../DTO/user.php");
 require_once("connection.php");
 
@@ -174,7 +175,7 @@ function getAllProf()
 function getProfbyId($prof_id)
 {
     $conn = openConnection();
-    $formation = null;
+    $profs = null;
 
     try {
         $sql = "SELECT prenom,nom FROM users WHERE iduser=? "; // SQL with parameters
@@ -184,11 +185,40 @@ function getProfbyId($prof_id)
         $result = $stmt->get_result(); // get the mysqli result
         if ($result->num_rows > 0) {
             if ($row = $result->fetch_assoc()) {
-                $formation = strtoupper($row["nom"]) . " " . ucfirst($row["prenom"]);
+                $profs = strtoupper($row["nom"]) . " " . ucfirst($row["prenom"]);
             }
         }
         closeConnection($conn);
     } catch (Exception $ex) {
     }
-    return $formation;;
+    return $profs;;
+}
+
+function getAttendence($student_id)
+{
+    $conn = openConnection();
+
+    $presences = null;
+
+    $query = "SELECT * from presence where etudiant_id=?;";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $student_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if (mysqli_num_rows($result) == false) {
+        closeConnection($conn);
+        return null;
+    }
+    $i = 0;
+    while ($row = mysqli_fetch_array($result)) {
+        $presence = new presence();
+        $presence->setCourId($row["cours_id"]);
+        $presence->setEtudiantId($row["etudiant_id"]);
+        $presence->setStatus($row["status"]);
+        $presence->setDate($row["date"]);
+        $presences[$i] = $presence;
+        $i++;
+    }
+    closeConnection($conn);
+    return $presences;
 }

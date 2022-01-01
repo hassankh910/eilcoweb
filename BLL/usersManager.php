@@ -26,6 +26,10 @@ function getProfName($prof_id) {
     return getProfbyId($prof_id);
 }
 
+function getPresence($student_id) {
+    return getAttendence($student_id);
+}
+
 function addStudent($user)
 {
     $username = $user->getPrenom()[0] . $user->getNom();

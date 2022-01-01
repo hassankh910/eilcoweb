@@ -148,6 +148,7 @@ CREATE TABLE `notes` (
 
 LOCK TABLES `notes` WRITE;
 /*!40000 ALTER TABLE `notes` DISABLE KEYS */;
+INSERT INTO `notes` VALUES (2,1,20),(2,2,20),(2,3,20),(2,5,20),(2,4,20);
 /*!40000 ALTER TABLE `notes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,7 +162,8 @@ DROP TABLE IF EXISTS `presence`;
 CREATE TABLE `presence` (
   `etudiant_id` int NOT NULL,
   `cours_id` int NOT NULL,
-  `status` tinyint NOT NULL,
+  `status` char(1) COLLATE utf8_unicode_ci NOT NULL,
+  `date` datetime NOT NULL,
   KEY `etudiant_idx` (`etudiant_id`),
   KEY `cours_idx` (`cours_id`),
   CONSTRAINT `cour_presence` FOREIGN KEY (`cours_id`) REFERENCES `cours` (`idcours`),
@@ -175,6 +177,7 @@ CREATE TABLE `presence` (
 
 LOCK TABLES `presence` WRITE;
 /*!40000 ALTER TABLE `presence` DISABLE KEYS */;
+INSERT INTO `presence` VALUES (2,1,'A','0000-00-00 00:00:00'),(2,4,'P','2022-01-01 00:00:00'),(2,3,'P','2022-01-01 00:00:00');
 /*!40000 ALTER TABLE `presence` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,7 +215,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Hassan','Khalife',1,'2000-11-15','Hassankh','Hassankhalife1','hassankhalife','hassankhalife','Male',NULL,'','',''),(2,'hassan','khalife',2,'2000-11-15','hassanstudent','hassankhalife1','hassankhalife','hassankhalife','Male',NULL,'','',''),(4,'sdfds','dasfds',2,'2021-12-01','sdasfds','SDDA2021-12-01','dsfsd@gmail.com','sdfds.dasfds.elv@eilco-ulco.fr','Femme',3,'123123123','123sdfsd',''),(5,'mostafa','yousef',2,'2000-08-26','myousef','V2qLKmCf','mostafa@gmail.com','mostafa.yousef.elv@eilco-ulco.fr','Homme',3,'123456789098','123dsfdsf',''),(6,'hassan','yassin',3,'1996-04-08','hyassin','vF7C4ZEi','hassan@usj.com','hassan.yassin.elv@eilco-ulco.fr','Homme',NULL,'123456789','12 sdsad',''),(7,'asdds','sdasd',3,'1987-12-23','asdasd','sxbnOu3Z','sadas@husadh.com','asdds.sdasd.elv@eilco-ulco.fr','Femme',NULL,'321424324','123dsfdsf',''),(10,'mostafa','yousef',2,'2000-02-06','myousef','TjTnxIYY','mostafa@gmail.com','mostafa.yousef.elv@eilco-ulco.fr','Homme',5,'1234567890','123dsfg',''),(11,'mohamed','atwi',2,'2000-12-20','matwi','PC2SQU7c','atwimohamed1020@gmail.com','mohamed.atwi.elv@eilco-ulco.fr','Homme',6,'0666566787','19 rue massenaappt 5','lebanese'),(12,'fdgfdg','dfgfdg',2,'2021-12-01','fdfgfdg','lg1iMeG7','bnfgnhgf@dgfhfg.com','fdgfdg.dfgfdg.elv@eilco-ulco.fr','Homme',2,'214234535','34vbcvnbbn','bangladeshi'),(13,'xcvbcxb','asdffds',3,'2021-12-13','xasdffds','qAasU5tO','sdfwdef@dsf.com','xcvbcxb.asdffds.elv@eilco-ulco.fr','Femme',NULL,'324324324','erew23cvd','bangladeshi');
+INSERT INTO `users` VALUES (1,'Hassan','Khalife',1,'2000-11-15','Hassankh','Hassankhalife1','hassankhalife','hassankhalife','Male',NULL,'','',''),(2,'hassan','khalife',2,'2000-11-15','hassanstudent','hassankhalife1','hassankhalife','hassankhalife','Male',3,'','',''),(4,'sdfds','dasfds',2,'2021-12-01','sdasfds','SDDA2021-12-01','dsfsd@gmail.com','sdfds.dasfds.elv@eilco-ulco.fr','Femme',3,'123123123','123sdfsd',''),(5,'mostafa','yousef',2,'2000-08-26','myousef','V2qLKmCf','mostafa@gmail.com','mostafa.yousef.elv@eilco-ulco.fr','Homme',3,'123456789098','123dsfdsf',''),(6,'hassan','yassin',3,'1996-04-08','hyassin','vF7C4ZEi','hassan@usj.com','hassan.yassin.elv@eilco-ulco.fr','Homme',NULL,'123456789','12 sdsad',''),(7,'asdds','sdasd',3,'1987-12-23','asdasd','sxbnOu3Z','sadas@husadh.com','asdds.sdasd.elv@eilco-ulco.fr','Femme',NULL,'321424324','123dsfdsf',''),(10,'mostafa','yousef',2,'2000-02-06','myousef','TjTnxIYY','mostafa@gmail.com','mostafa.yousef.elv@eilco-ulco.fr','Homme',5,'1234567890','123dsfg',''),(11,'mohamed','atwi',2,'2000-12-20','matwi','PC2SQU7c','atwimohamed1020@gmail.com','mohamed.atwi.elv@eilco-ulco.fr','Homme',6,'0666566787','19 rue massenaappt 5','lebanese'),(12,'fdgfdg','dfgfdg',2,'2021-12-01','fdfgfdg','lg1iMeG7','bnfgnhgf@dgfhfg.com','fdgfdg.dfgfdg.elv@eilco-ulco.fr','Homme',2,'214234535','34vbcvnbbn','bangladeshi'),(13,'xcvbcxb','asdffds',3,'2021-12-13','xasdffds','qAasU5tO','sdfwdef@dsf.com','xcvbcxb.asdffds.elv@eilco-ulco.fr','Femme',NULL,'324324324','erew23cvd','bangladeshi');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -225,4 +228,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-31 14:42:40
+-- Dump completed on 2022-01-01 18:02:02

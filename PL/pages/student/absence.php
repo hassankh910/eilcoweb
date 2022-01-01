@@ -86,26 +86,40 @@ session_start();
             <div class="main-panel">
                 <div class="content-wrapper">
                     <!-- hon el content li bl nos-->
-                    <?php
-                    require('../../../BLL/coursManager.php');
-                    require('../../../DTO/user.php');
-                    //require('../../../DTO/cour.php');
-                    $u = new user();
-                    $u = unserialize($_SESSION['loggeduser']);
-                    $courses = getCoursbystudent($u->getId());
-                    echo "<div class='course-panel row'>";
-                    for ($i = 0; $i < count($courses); $i++) {
-                        echo "<div class='card col-md-4' style='width: 18rem; margin-left=0.2rem'>"
-                        ."<div class='res-circle'>"
-                        ."<div class='circle-txt'>".$courses[$i]->getAbreviation()."</div>"
-                        ."</div>"
-                        ."<div class='card-body'>"
-                        ."<p class='card-text'>".$courses[$i]->getNom()."</p>"
-                        ."</div>"
-                        ."</div>";}
-                        echo "</div>"
-
-                    ?>
+                    <table class="table table-striped">
+                        <?php
+                        require('../../../BLL/usersManager.php');
+                        require('../../../BLL/coursManager.php');
+                        $u = new user();
+                        $u = unserialize($_SESSION['loggeduser']);
+                        $presences = getPresence($u->getId());
+                        echo
+                        "<thead>" .
+                            "<tr>" .
+                            "<th>" .
+                            "Abreviation" .
+                            "</th>" .
+                            "<th>" .
+                            "Nom" .
+                            "</th>" .
+                            "<th>" .
+                            "Status" .
+                            "</th>" .
+                            "<th>" .
+                            "Date" .
+                            "</th>" .
+                            "</tr>" .
+                            "</thead>";
+                        for ($i = 0; $i < count($presences); $i++) {
+                            echo "<tr>"
+                                . "<td>".getCoursbyId($presences[$i]->getCourId())->getAbreviation()."</td>"
+                                . "<td>" . getCoursbyId($presences[$i]->getCourId())->getNom(). "</td>"
+                                . "<td>" . $presences[$i]->getStatus() . "</td>"
+                                . "<td>" . $presences[$i]->getDate() . "</td>"
+                                . "</tr>";
+                        }
+                        ?>
+                    </table>
                 </div>
             </div>
             <nav class="sidebar calendarbar" id="sidebar">
@@ -119,7 +133,7 @@ session_start();
 
     <!-- plugins:js lal profile-->
     <script src="../../assets/vendors/base/vendor.bundle.base.js"></script>
-        <!-- lal nav wl responsive -->
+    <!-- lal nav wl responsive -->
     <script src="../../scripts/admin/js/off-canvas.js"></script>
     <!-- lal calendar-->
     <script src="../../scripts/student/js/rome.js"></script>
