@@ -94,18 +94,20 @@ session_start();
                     $u = unserialize($_SESSION['loggeduser']);
                     $courses = getCoursbystudent($u->getId());
                     echo "<div class='course-panel row'>";
-                    for ($i = 0; $i < count($courses); $i++) {
-                        echo "<div class='card col-md-4' style='width: 18rem;'>"
-                        ."<a href='google.com' style='color: black; text-decoration: none; cursor: pointer'>"
-                        ."<div class='res-circle'>"
-                        ."<div class='circle-txt'>".$courses[$i]->getAbreviation()."</div>"
-                        ."</div>"
-                        ."<div class='card-body'>"
-                        ."<p class='card-text'>".$courses[$i]->getNom()."</p>"
-                        ."</div>"
-                        ."</a>"
-                        ."</div>";}
-                        echo "</div>"
+                    if ($courses != null)
+                        for ($i = 0; $i < count($courses); $i++) {
+                            echo "<div class='card col-md-4' style='width: 18rem;'>"
+                                . "<a href='google.com' style='color: black; text-decoration: none; cursor: pointer'>"
+                                . "<div class='res-circle'>"
+                                . "<div class='circle-txt'>" . $courses[$i]->getAbreviation() . "</div>"
+                                . "</div>"
+                                . "<div class='card-body'>"
+                                . "<p class='card-text'>" . $courses[$i]->getNom() . "</p>"
+                                . "</div>"
+                                . "</a>"
+                                . "</div>";
+                        }
+                    echo "</div>"
 
                     ?>
                 </div>
@@ -121,7 +123,7 @@ session_start();
 
     <!-- plugins:js lal profile-->
     <script src="../../assets/vendors/base/vendor.bundle.base.js"></script>
-        <!-- lal nav wl responsive -->
+    <!-- lal nav wl responsive -->
     <script src="../../scripts/admin/js/off-canvas.js"></script>
     <!-- lal calendar-->
     <script src="../../scripts/student/js/rome.js"></script>

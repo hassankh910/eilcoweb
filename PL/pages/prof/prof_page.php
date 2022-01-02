@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +33,8 @@ session_start();
 
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                            <img src="images/faces/face28.jpg" alt="profile" />
+                            <!-- <img src="images/faces/face28.jpg" alt="profile" /> -->
+                   
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                             <a class="dropdown-item">
@@ -54,88 +56,46 @@ session_start();
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="student_page.php">
+                        <a class="nav-link" href="prof_page.php">
                             <i class="ti-home menu-icon"></i>
                             <span class="menu-title">Mes Cours</span>
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link" href="edt.php">
-                            <i class="ti-user menu-icon"></i>
+                            <i class="ti-calendar  menu-icon"></i>
                             <span class="menu-title">Emploi de temps </span>
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="notes.php">
-                            <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Mes Notes</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="absence.php">
-                            <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Mes Absences</span>
-                        </a>
-                    </li>
                 </ul>
             </nav>
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
                     <!-- hon el content li bl nos-->
-                    <table class="table table-striped">
-                        <?php
-                        require('../../../BLL/coursManager.php');
-                        require('../../../DTO/user.php');
-                        $u = new user();
-                        $u = unserialize($_SESSION['loggeduser']);
-                        $courses = getCoursbystudent($u->getId());
-                        $totalNbCredit = 0;
-                        $moyenne = 0;
-                        echo
-                        "<thead>" .
-                            "<tr>" .
-                            "<th>" .
-                            "Abreviation" .
-                            "</th>" .
-                            "<th>" .
-                            "Nom" .
-                            "</th>" .
-                            "<th>" .
-                            "Note" .
-                            "</th>" .
-                            "<th>" .
-                            "Nombre de credits" .
-                            "</th>" .
-                            "<th>" .
-                            "Total" .
-                            "</th>" .
-                            "</tr>" .
-                            "</thead>";
-                        if ($courses != null)
-                            for ($i = 0; $i < count($courses); $i++) {
-                                echo "<tr>"
-                                    . "<td>" . $courses[$i]->getAbreviation() . "</td>"
-                                    . "<td>" . $courses[$i]->getNom() . "</td>"
-                                    . "<td>" . getNoteCour($u->getId(), $courses[$i]->getId()) . "</td>"
-                                    . "<td>" . $courses[$i]->getNb_credits() . "</td>"
-                                    . "<td>" . getNoteCour($u->getId(), $courses[$i]->getId()) * $courses[$i]->getNb_credits() . "</td>"
-                                    . "</tr>";
-                                $totalNbCredit = $totalNbCredit + $courses[$i]->getNb_credits();
-                                $moyenne = $moyenne + getNoteCour($u->getId(), $courses[$i]->getId()) * $courses[$i]->getNb_credits();
-                            }
-                        echo "<tr>"
-                            . "<td></td>"
-                            . "<td>Moyenne</td>"
-                            . "<td>".$moyenne / $totalNbCredit."</td>"
-                            . "<td>" . $totalNbCredit . "</td>"
-                            . "<td>" . $moyenne . "</td>"
-                            . "</tr>";
-                        ?>
-                    </table>
+                    <?php
+                    require('../../../BLL/coursManager.php');
+                    require('../../../DTO/user.php');
+
+                    $u = new user();
+                    $u = unserialize($_SESSION['loggeduser']);
+                    $courses = getCoursbyProf($u->getId());
+                    echo "<div class='course-panel row'>";
+                    for ($i = 0; $i < count($courses); $i++) {
+                        echo "<div class='card col-md-4' style='width: 18rem;'>"
+                        ."<a href='cours.php?id=".$courses[$i]->getId()."' style='color: black; text-decoration: none; cursor: pointer'>"
+                        ."<div class='res-circle'>"
+                        ."<div class='circle-txt'>".$courses[$i]->getAbreviation()."</div>"
+                        ."</div>"
+                        ."<div class='card-body'>"
+                        ."<p class='card-text'>".$courses[$i]->getNom()."</p>"
+                        ."</div>"
+                        ."</a>"
+                        ."</div>";}
+                        echo "</div>"
+
+                    ?>
                 </div>
             </div>
             <nav class="sidebar calendarbar" id="sidebar">
@@ -149,7 +109,7 @@ session_start();
 
     <!-- plugins:js lal profile-->
     <script src="../../assets/vendors/base/vendor.bundle.base.js"></script>
-    <!-- lal nav wl responsive -->
+        <!-- lal nav wl responsive -->
     <script src="../../scripts/admin/js/off-canvas.js"></script>
     <!-- lal calendar-->
     <script src="../../scripts/student/js/rome.js"></script>

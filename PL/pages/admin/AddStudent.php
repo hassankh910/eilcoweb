@@ -11,8 +11,6 @@
   <link rel="stylesheet" href="../../assets/vendors/base/vendor.bundle.base.css">
 
   <link rel="stylesheet" href="../../styles/admin_page.css">
-
-  <link rel="shortcut icon" href="../images/favicon.png" />
 </head>
 
 <body>

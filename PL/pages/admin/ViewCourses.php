@@ -12,8 +12,6 @@
     <!-- endinject -->
     <!-- inject:css -->
     <link rel="stylesheet" href="../../styles/admin_page.css">
-    <!-- endinject -->
-    <link rel="shortcut icon" href="../images/favicon.png" />
 </head>
 
 <body>
@@ -146,9 +144,6 @@
                                                     "<th>" .
                                                     "Delete" .
                                                     "</th>" .
-                                                    "<th>" .
-                                                    "Update" .
-                                                    "</th>" .
                                                     "</tr>" .
                                                     "</thead>";
 
@@ -160,8 +155,7 @@
                                                         . "<td>" . getProfName($profiles[$i]->getProf_id()) . "</td>"
                                                         . "<td>" .  GetFormationname($profiles[$i]->getFormation_id()) . "</td>"
                                                         . "<td>" . $profiles[$i]->getNb_credits() . "</td>"
-                                                        . "<td><button class='btn btn-danger'>Delete</button></td>"
-                                                        . "<td><button class='btn btn-warning'>Update</button></td>"
+                                                        . "<td><a class='btn btn-danger' href='../deletecours.php?id=".$profiles[$i]->getId()."'>Delete</a></td>"
                                                         . "</tr>";
                                                 }
                                             }

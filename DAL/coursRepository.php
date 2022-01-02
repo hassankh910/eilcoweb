@@ -129,3 +129,52 @@ function getCoursGrade($student_id, $cours_id)
     }
     return $note;
 }
+
+function deleteCourbyId($idcours)
+{
+    $conn = openConnection();
+    $deleteResponse = false;
+    try {
+        $sql = "DELETE FROM `cours` WHERE idcours=?;";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $idcours);
+        if ($stmt->execute())
+            $deleteResponse = true;
+        $stmt->close();
+        closeConnection($conn);
+    } catch (Exception $ex) {
+        echo "<script>alert(" . $ex . ")</script>";
+    }
+    return $deleteResponse;
+}
+
+function getCoursbyProfId($prof_id)
+{
+    $conn = openConnection();
+
+    $cours = null;
+
+    $query = "select* from users  ,cours where users.iduser=? and users.role=3;";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $prof_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if (mysqli_num_rows($result) == false) {
+        closeConnection($conn);
+        return null;
+    }
+    $i = 0;
+    while ($row = mysqli_fetch_array($result)) {
+        $cour = new cour();
+        $cour->setId($row["idcours"]);
+        $cour->setNom($row["nom"]);
+        $cour->setAbreviation($row["abreviation"]);
+        $cour->setProf_id($row["prof_id"]);
+        $cour->setFormation_id($row["formation_id"]);
+        $cour->setNb_credits($row["credits"]);
+        $cours[$i] = $cour;
+        $i++;
+    }
+    closeConnection($conn);
+    return $cours;
+}

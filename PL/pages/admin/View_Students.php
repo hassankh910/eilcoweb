@@ -15,8 +15,6 @@ session_start();
   <!-- endinject -->
   <!-- inject:css -->
   <link rel="stylesheet" href="../../styles/admin_page.css">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="../images/favicon.png" />
 </head>
 
 <body>
@@ -154,9 +152,6 @@ session_start();
                           "<th>" .
                           "Delete" .
                           "</th>" .
-                          "<th>" .
-                          "Update" .
-                          "</th>" .
                           "</tr>" .
                           "</thead>";
 
@@ -169,8 +164,7 @@ session_start();
                             . "<td>" . $profiles[$i]->getEmail_personel() . "</td>"
                             . "<td>" . $profiles[$i]->getEmail_universitaire() . "</td>"
                             . "<td>" . GetFormationname($profiles[$i]->getFormationId()) . "</td>"
-                            . "<td><button class='btn btn-danger'>Delete</button></td>"
-                            . "<td><button class='btn btn-warning'>Update</button></td>"
+                            . "<td><a class='btn btn-danger'  href='../deleteuser.php?id=".$profiles[$i]->getId()."'>Delete</a></td>"
                             . "</tr>";
                         }
                       }
@@ -222,9 +216,6 @@ session_start();
                           "<th>" .
                           "Delete" .
                           "</th>" .
-                          "<th>" .
-                          "Update" .
-                          "</th>" .
                           "</tr>" .
                           "</thead>";
 
@@ -236,8 +227,7 @@ session_start();
                             . "<td>" . $profiles[$i]->getNom() . "</td>"
                             . "<td>" . $profiles[$i]->getEmail_personel() . "</td>"
                             . "<td>" . $profiles[$i]->getEmail_universitaire() . "</td>"
-                            . "<td><button class='btn btn-danger'>Delete</button></td>"
-                            . "<td><button class='btn btn-warning'>Update</button></td>"
+                            . "<td><a class='btn btn-danger'  href='../deleteuser.php?id=".$profiles[$i]->getId()."'>Delete</a></td>"
                             . "</tr>";
                         }
                       }

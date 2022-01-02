@@ -14,8 +14,6 @@
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="../../styles/admin_page.css">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="../images/favicon.png" />
 </head>
 
 <body>

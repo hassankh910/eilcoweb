@@ -110,14 +110,15 @@ session_start();
                             "</th>" .
                             "</tr>" .
                             "</thead>";
-                        for ($i = 0; $i < count($presences); $i++) {
-                            echo "<tr>"
-                                . "<td>".getCoursbyId($presences[$i]->getCourId())->getAbreviation()."</td>"
-                                . "<td>" . getCoursbyId($presences[$i]->getCourId())->getNom(). "</td>"
-                                . "<td>" . $presences[$i]->getStatus() . "</td>"
-                                . "<td>" . $presences[$i]->getDate() . "</td>"
-                                . "</tr>";
-                        }
+                        if ($presences != null)
+                            for ($i = 0; $i < count($presences); $i++) {
+                                echo "<tr>"
+                                    . "<td>" . getCoursbyId($presences[$i]->getCourId())->getAbreviation() . "</td>"
+                                    . "<td>" . getCoursbyId($presences[$i]->getCourId())->getNom() . "</td>"
+                                    . "<td>" . $presences[$i]->getStatus() . "</td>"
+                                    . "<td>" . $presences[$i]->getDate() . "</td>"
+                                    . "</tr>";
+                            }
                         ?>
                     </table>
                 </div>

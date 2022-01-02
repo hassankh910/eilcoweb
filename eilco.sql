@@ -32,8 +32,8 @@ CREATE TABLE `cours` (
   PRIMARY KEY (`idcours`),
   KEY `prof_idx` (`prof_id`),
   KEY `classe_cour_idx` (`formation_id`),
-  CONSTRAINT `formation_cour` FOREIGN KEY (`formation_id`) REFERENCES `formation` (`idformation`),
-  CONSTRAINT `prof_cour` FOREIGN KEY (`prof_id`) REFERENCES `users` (`iduser`)
+  CONSTRAINT `formation_cour` FOREIGN KEY (`formation_id`) REFERENCES `formation` (`idformation`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `prof_cour` FOREIGN KEY (`prof_id`) REFERENCES `users` (`iduser`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -43,7 +43,7 @@ CREATE TABLE `cours` (
 
 LOCK TABLES `cours` WRITE;
 /*!40000 ALTER TABLE `cours` DISABLE KEYS */;
-INSERT INTO `cours` VALUES (1,'Electronique','E201',6,3,3),(2,'Analyse','AN21',7,3,4),(3,'Programmation','PG001',13,3,3),(4,'informatique industriel','II201',13,2,3),(5,'droit','D202',7,1,3);
+INSERT INTO `cours` VALUES (1,'Electronique','E201',6,3,3),(3,'Programmation','PG001',13,3,3),(5,'droit','D202',7,1,3);
 /*!40000 ALTER TABLE `cours` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,9 +59,10 @@ CREATE TABLE `document` (
   `nom` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `lien` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `cour_id` int NOT NULL,
+  `Date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`iddocument`),
   KEY `cour_document_idx` (`cour_id`),
-  CONSTRAINT `cour_document` FOREIGN KEY (`cour_id`) REFERENCES `cours` (`idcours`)
+  CONSTRAINT `cour_document` FOREIGN KEY (`cour_id`) REFERENCES `cours` (`idcours`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -86,7 +87,7 @@ CREATE TABLE `emploi_du_temps` (
   `date` date NOT NULL,
   `heurs` time NOT NULL,
   KEY `cour_emploi_idx` (`cour_id`),
-  CONSTRAINT `cour_emploi` FOREIGN KEY (`cour_id`) REFERENCES `cours` (`idcours`)
+  CONSTRAINT `cour_emploi` FOREIGN KEY (`cour_id`) REFERENCES `cours` (`idcours`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -111,7 +112,7 @@ CREATE TABLE `formation` (
   `nomformation` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`idformation`),
   UNIQUE KEY `nomformation_UNIQUE` (`nomformation`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -137,8 +138,8 @@ CREATE TABLE `notes` (
   `note` int NOT NULL,
   KEY `etudiant_idx` (`etudiant_id`),
   KEY `cour_idx` (`cours_id`),
-  CONSTRAINT `cour_note` FOREIGN KEY (`cours_id`) REFERENCES `cours` (`idcours`),
-  CONSTRAINT `etudiant_note` FOREIGN KEY (`etudiant_id`) REFERENCES `users` (`iduser`)
+  CONSTRAINT `cour_note` FOREIGN KEY (`cours_id`) REFERENCES `cours` (`idcours`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `etudiant_note` FOREIGN KEY (`etudiant_id`) REFERENCES `users` (`iduser`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -148,7 +149,7 @@ CREATE TABLE `notes` (
 
 LOCK TABLES `notes` WRITE;
 /*!40000 ALTER TABLE `notes` DISABLE KEYS */;
-INSERT INTO `notes` VALUES (2,1,20),(2,2,20),(2,3,20),(2,5,20),(2,4,20);
+INSERT INTO `notes` VALUES (2,1,20),(2,3,20),(2,5,20);
 /*!40000 ALTER TABLE `notes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,11 +164,11 @@ CREATE TABLE `presence` (
   `etudiant_id` int NOT NULL,
   `cours_id` int NOT NULL,
   `status` char(1) COLLATE utf8_unicode_ci NOT NULL,
-  `date` datetime NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY `etudiant_idx` (`etudiant_id`),
   KEY `cours_idx` (`cours_id`),
-  CONSTRAINT `cour_presence` FOREIGN KEY (`cours_id`) REFERENCES `cours` (`idcours`),
-  CONSTRAINT `etudiant_presence` FOREIGN KEY (`etudiant_id`) REFERENCES `users` (`iduser`)
+  CONSTRAINT `cour_presence` FOREIGN KEY (`cours_id`) REFERENCES `cours` (`idcours`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `etudiant_presence` FOREIGN KEY (`etudiant_id`) REFERENCES `users` (`iduser`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -177,7 +178,6 @@ CREATE TABLE `presence` (
 
 LOCK TABLES `presence` WRITE;
 /*!40000 ALTER TABLE `presence` DISABLE KEYS */;
-INSERT INTO `presence` VALUES (2,1,'A','0000-00-00 00:00:00'),(2,4,'P','2022-01-01 00:00:00'),(2,3,'P','2022-01-01 00:00:00');
 /*!40000 ALTER TABLE `presence` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,7 +205,7 @@ CREATE TABLE `users` (
   `nationalite` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`iduser`),
   KEY `formation_idx` (`formation_id`),
-  CONSTRAINT `formation` FOREIGN KEY (`formation_id`) REFERENCES `formation` (`idformation`)
+  CONSTRAINT `formation` FOREIGN KEY (`formation_id`) REFERENCES `formation` (`idformation`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -215,7 +215,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Hassan','Khalife',1,'2000-11-15','Hassankh','Hassankhalife1','hassankhalife','hassankhalife','Male',NULL,'','',''),(2,'hassan','khalife',2,'2000-11-15','hassanstudent','hassankhalife1','hassankhalife','hassankhalife','Male',3,'','',''),(4,'sdfds','dasfds',2,'2021-12-01','sdasfds','SDDA2021-12-01','dsfsd@gmail.com','sdfds.dasfds.elv@eilco-ulco.fr','Femme',3,'123123123','123sdfsd',''),(5,'mostafa','yousef',2,'2000-08-26','myousef','V2qLKmCf','mostafa@gmail.com','mostafa.yousef.elv@eilco-ulco.fr','Homme',3,'123456789098','123dsfdsf',''),(6,'hassan','yassin',3,'1996-04-08','hyassin','vF7C4ZEi','hassan@usj.com','hassan.yassin.elv@eilco-ulco.fr','Homme',NULL,'123456789','12 sdsad',''),(7,'asdds','sdasd',3,'1987-12-23','asdasd','sxbnOu3Z','sadas@husadh.com','asdds.sdasd.elv@eilco-ulco.fr','Femme',NULL,'321424324','123dsfdsf',''),(10,'mostafa','yousef',2,'2000-02-06','myousef','TjTnxIYY','mostafa@gmail.com','mostafa.yousef.elv@eilco-ulco.fr','Homme',5,'1234567890','123dsfg',''),(11,'mohamed','atwi',2,'2000-12-20','matwi','PC2SQU7c','atwimohamed1020@gmail.com','mohamed.atwi.elv@eilco-ulco.fr','Homme',6,'0666566787','19 rue massenaappt 5','lebanese'),(12,'fdgfdg','dfgfdg',2,'2021-12-01','fdfgfdg','lg1iMeG7','bnfgnhgf@dgfhfg.com','fdgfdg.dfgfdg.elv@eilco-ulco.fr','Homme',2,'214234535','34vbcvnbbn','bangladeshi'),(13,'xcvbcxb','asdffds',3,'2021-12-13','xasdffds','qAasU5tO','sdfwdef@dsf.com','xcvbcxb.asdffds.elv@eilco-ulco.fr','Femme',NULL,'324324324','erew23cvd','bangladeshi');
+INSERT INTO `users` VALUES (1,'Hassan','Khalife',1,'2000-11-15','Hassankh','Hassankhalife1','hassankhalife','hassankhalife','Male',NULL,'','',''),(2,'hassan','khalife',2,'2000-11-15','hassanstudent','hassankhalife1','hassankhalife','hassankhalife','Male',3,'','',''),(4,'sdfds','dasfds',2,'2021-12-01','sdasfds','SDDA2021-12-01','dsfsd@gmail.com','sdfds.dasfds.elv@eilco-ulco.fr','Femme',3,'123123123','123sdfsd',''),(5,'mostafa','yousef',2,'2000-08-26','myousef','V2qLKmCf','mostafa@gmail.com','mostafa.yousef.elv@eilco-ulco.fr','Homme',3,'123456789098','123dsfdsf',''),(6,'hassan','yassin',3,'1996-04-08','hyassin','vF7C4ZEi','hassan@usj.com','hassan.yassin.elv@eilco-ulco.fr','Homme',NULL,'123456789','12 sdsad',''),(7,'asdds','sdasd',3,'1987-12-23','asdasd','sxbnOu3Z','sadas@husadh.com','asdds.sdasd.elv@eilco-ulco.fr','Femme',NULL,'321424324','123dsfdsf',''),(10,'mostafa','yousef',2,'2000-02-06','myousef','TjTnxIYY','mostafa@gmail.com','mostafa.yousef.elv@eilco-ulco.fr','Homme',5,'1234567890','123dsfg',''),(11,'mohamed','atwi',2,'2000-12-20','matwi','PC2SQU7c','atwimohamed1020@gmail.com','mohamed.atwi.elv@eilco-ulco.fr','Homme',6,'0666566787','19 rue massenaappt 5','lebanese'),(13,'xcvbcxb','asdffds',3,'2021-12-13','xasdffds','qAasU5tO','sdfwdef@dsf.com','xcvbcxb.asdffds.elv@eilco-ulco.fr','Femme',NULL,'324324324','erew23cvd','bangladeshi');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -228,4 +228,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-01 18:02:02
+-- Dump completed on 2022-01-02 15:29:48

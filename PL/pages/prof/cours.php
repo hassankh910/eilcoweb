@@ -1,6 +1,6 @@
 <?php
-
 session_start();
+$cours_id = $_GET["id"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,30 +54,31 @@ session_start();
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="student_page.php">
+                        <a class="nav-link" href="prof_page.php">
                             <i class="ti-home menu-icon"></i>
-                            <span class="menu-title">Mes Cours</span>
+                            <span class="menu-title">Home</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="edt.php">
-                            <i class="ti-user menu-icon"></i>
-                            <span class="menu-title">Emploi de temps </span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="notes.php">
-                            <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Mes Notes</span>
-                        </a>
+                        <?php
+                        echo "<a class='nav-link' href='notes.php?id=".$cours_id."'>"
+                            ."<i class='ti-medall  menu-icon'></i>"
+                            ."<span class='menu-title'>Notes</span>"
+                       ."</a>"
+                        ?>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="absence.php">
-                            <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Mes Absences</span>
+                            <i class="ti-pencil  menu-icon"></i>
+                            <span class="menu-title">Absences</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="upload.php">
+                            <i class="ti-import menu-icon"></i>
+                            <span class="menu-title">Documents</span>
                         </a>
                     </li>
                 </ul>
@@ -86,56 +87,69 @@ session_start();
             <div class="main-panel">
                 <div class="content-wrapper">
                     <!-- hon el content li bl nos-->
-                    <table class="table table-striped">
-                        <?php
-                        require('../../../BLL/coursManager.php');
-                        require('../../../DTO/user.php');
-                        $u = new user();
-                        $u = unserialize($_SESSION['loggeduser']);
-                        $courses = getCoursbystudent($u->getId());
-                        $totalNbCredit = 0;
-                        $moyenne = 0;
-                        echo
-                        "<thead>" .
-                            "<tr>" .
-                            "<th>" .
-                            "Abreviation" .
-                            "</th>" .
-                            "<th>" .
-                            "Nom" .
-                            "</th>" .
-                            "<th>" .
-                            "Note" .
-                            "</th>" .
-                            "<th>" .
-                            "Nombre de credits" .
-                            "</th>" .
-                            "<th>" .
-                            "Total" .
-                            "</th>" .
-                            "</tr>" .
-                            "</thead>";
-                        if ($courses != null)
-                            for ($i = 0; $i < count($courses); $i++) {
-                                echo "<tr>"
-                                    . "<td>" . $courses[$i]->getAbreviation() . "</td>"
-                                    . "<td>" . $courses[$i]->getNom() . "</td>"
-                                    . "<td>" . getNoteCour($u->getId(), $courses[$i]->getId()) . "</td>"
-                                    . "<td>" . $courses[$i]->getNb_credits() . "</td>"
-                                    . "<td>" . getNoteCour($u->getId(), $courses[$i]->getId()) * $courses[$i]->getNb_credits() . "</td>"
-                                    . "</tr>";
-                                $totalNbCredit = $totalNbCredit + $courses[$i]->getNb_credits();
-                                $moyenne = $moyenne + getNoteCour($u->getId(), $courses[$i]->getId()) * $courses[$i]->getNb_credits();
-                            }
-                        echo "<tr>"
-                            . "<td></td>"
-                            . "<td>Moyenne</td>"
-                            . "<td>".$moyenne / $totalNbCredit."</td>"
-                            . "<td>" . $totalNbCredit . "</td>"
-                            . "<td>" . $moyenne . "</td>"
-                            . "</tr>";
-                        ?>
-                    </table>
+                    <div class="row">
+
+<div class="col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Etudiants</h4>
+
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <?php
+          require_once('../../../BLL/usersManager.php');
+          require_once('../../../BLL/formationManager.php');
+          include_once("../../../DTO/user.php");
+           $profiles =  GetAllStudentsbycour($cours_id);
+          if ($profiles == null) {
+            echo "no results";
+          } else {
+            echo
+            "<thead>" .
+              "<tr>" .
+              "<th>" .
+              "Prenom" .
+              "</th>" .
+              "<th>" .
+              "Nom" .
+              "</th>" .
+              "<th>" .
+              "email personel" .
+              "</th>" .
+              "<th>" .
+              "email universitaire" .
+              "</th>" .
+              "<th>" .
+              "Formation" .
+              "</th>" .
+           
+              "</tr>" .
+              "</thead>";
+
+            for ($i = 0; $i < count($profiles); $i++) {
+              echo
+              "<tr>"
+                . "<td>" . $profiles[$i]->getPrenom() . "</td>"
+                . "<td>" . $profiles[$i]->getNom() . "</td>"
+                . "<td>" . $profiles[$i]->getEmail_personel() . "</td>"
+                . "<td>" . $profiles[$i]->getEmail_universitaire() . "</td>"
+                . "<td>" . GetFormationname($profiles[$i]->getFormationId()) . "</td>"
+                . "</tr>";
+            }
+          }
+          ?>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+
+
+
                 </div>
             </div>
             <nav class="sidebar calendarbar" id="sidebar">
@@ -149,7 +163,7 @@ session_start();
 
     <!-- plugins:js lal profile-->
     <script src="../../assets/vendors/base/vendor.bundle.base.js"></script>
-    <!-- lal nav wl responsive -->
+        <!-- lal nav wl responsive -->
     <script src="../../scripts/admin/js/off-canvas.js"></script>
     <!-- lal calendar-->
     <script src="../../scripts/student/js/rome.js"></script>

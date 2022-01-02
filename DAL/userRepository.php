@@ -222,3 +222,54 @@ function getAttendence($student_id)
     closeConnection($conn);
     return $presences;
 }
+
+function deleteUserbyId($iduser)
+{
+    $conn = openConnection();
+    $deleteResponse = false;
+    try {
+        $sql = "DELETE FROM `users`WHERE iduser=?;";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $iduser);
+        if ($stmt->execute())
+            $deleteResponse = true;
+        $stmt->close();
+        closeConnection($conn);
+    } catch (Exception $ex) {
+    }
+    return $deleteResponse;
+}
+
+function getAllStudentsbycours($cours_id)
+{
+    $conn = openConnection();
+    $query = "SELECT *   from users  ,cours where users.formation_id=cours.formation_id  and cours.idcours= ? and users.role=2";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $cours_id);
+    $stmt->execute();
+    $result =$stmt->get_result();
+    if (mysqli_num_rows($result) == false) {
+        closeConnection($conn);
+        return null;
+    }
+    $i = 0;
+    while ($row = mysqli_fetch_array($result)) {
+        $user = new user();
+        $user->setId($row["iduser"]);
+        $user->setPrenom($row["prenom"]);
+        $user->setNom($row["nom"]);
+        $user->setDate_de_naissance($row["date_de_naissance"]);
+        $user->setEmail_personel($row["email_personel"]);
+        $user->setSexe($row["sexe"]);
+        $user->setPhone($row["phone"]);
+        $user->setAdresse($row["Adresse"]);
+        $user->setUsername($row["username"]);
+        $user->setEmail_universitaire($row["email_universitaire"]);
+        $user->setNationalite($row["nationalite"]);
+        $user->setFormationId($row["formation_id"]);
+        $users[$i] = $user;
+        $i++;
+    }
+    closeConnection($conn);
+    return $users;
+}

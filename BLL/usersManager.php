@@ -1,5 +1,5 @@
 <?php
-require(__DIR__."/../DAL/userRepository.php");
+require(__DIR__ . "/../DAL/userRepository.php");
 
 function loginUser($user)
 {
@@ -10,7 +10,8 @@ function UserByUsername($username)
 {
     return getUserByUsername($username);
 }
-function getAllStudents() {
+function getAllStudents()
+{
     return getStudents();
 }
 function GetStudentsbyFormation($formation_id)
@@ -18,18 +19,30 @@ function GetStudentsbyFormation($formation_id)
     return GetUserbyFormation($formation_id);
 }
 
-function getProfs() {
+function  GetAllStudentsbycour($cours_id)
+{
+    return getAllStudentsbycours($cours_id);
+}
+
+function getProfs()
+{
     return getAllProf();
 }
 
-function getProfName($prof_id) {
+function getProfName($prof_id)
+{
     return getProfbyId($prof_id);
 }
 
-function getPresence($student_id) {
+function getPresence($student_id)
+{
     return getAttendence($student_id);
 }
 
+function deleteUser($iduser)
+{
+    return deleteUserbyId($iduser);
+}
 function addStudent($user)
 {
     $username = $user->getPrenom()[0] . $user->getNom();
