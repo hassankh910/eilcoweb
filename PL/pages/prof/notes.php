@@ -2,7 +2,7 @@
 
 session_start();
 $cours_id = $_GET["id"];
-
+$_SESSION['cours_id'] = $cours_id;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -97,7 +97,7 @@ $cours_id = $_GET["id"];
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Notes</h4>
-                                    <form id="myform">
+                                    <form action="../addnotes.php" method="POST">
                                         <div class="table-responsive">
                                             <table class="table table-striped">
                                                 <?php
@@ -143,8 +143,8 @@ $cours_id = $_GET["id"];
                                             </table>
 
                                         </div>
+                                        <button class="btn btn-info" name="submitBtn">submit </button>
                                     </form>
-                                    <button id="btn-sub">submit </button>
                                 </div>
                             </div>
                         </div>
@@ -174,27 +174,6 @@ $cours_id = $_GET["id"];
     <script src="../../scripts/student/js/rome.js"></script>
 
     <script src="../../scripts/student/js/main.js"></script>
-    <script>
-        $(document).ready(function() {
-            $("#btn-sub").click(function() { //ma tba3bes bi chi hone (bob)
-                //heyde lfonction ajax bteb3at idcours w array mawjoud fiha idetudiant + note
-                var x = $("#myform").serializeArray();
-                // console.log(x);
-                idcours = '<?php echo $cours_id; ?>';
-                $.ajax({
-                    type: 'POST',
-                    url: 'test.php',
-                    data: {
-                        data: x,
-                        id: idcours
-                    },
-                    success: function(response) {
-                        console.log(response);
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 
 </html>
