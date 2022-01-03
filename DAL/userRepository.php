@@ -175,23 +175,36 @@ function getAllProf()
 function getProfbyId($prof_id)
 {
     $conn = openConnection();
-    $profs = null;
+    $userResponse = null;
 
     try {
-        $sql = "SELECT prenom,nom FROM users WHERE iduser=? "; // SQL with parameters
+        $sql = "SELECT * FROM users WHERE iduser=? "; // SQL with parameters
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $prof_id);
         $stmt->execute();
         $result = $stmt->get_result(); // get the mysqli result
         if ($result->num_rows > 0) {
+            $userResponse = new user();
             if ($row = $result->fetch_assoc()) {
-                $profs = strtoupper($row["nom"]) . " " . ucfirst($row["prenom"]);
+                $userResponse->setUsername($row["username"]);
+                $userResponse->setId($row["iduser"]);
+                $userResponse->setPrenom($row["prenom"]);
+                $userResponse->setNom($row["nom"]);
+                $userResponse->setRole($row["role"]);
+                $userResponse->setDate_de_naissance($row["date_de_naissance"]);
+                $userResponse->setPassword($row["password"]);
+                $userResponse->setEmail_personel($row["email_personel"]);
+                $userResponse->setEmail_universitaire($row["email_universitaire"]);
+                $userResponse->setSexe($row["sexe"]);
+                $userResponse->setNationalite($row["nationalite"]);
+                $userResponse->setPhone($row["phone"]);
+                $userResponse->setAdresse($row["Adresse"]);
             }
         }
         closeConnection($conn);
     } catch (Exception $ex) {
     }
-    return $profs;;
+    return $userResponse;
 }
 
 function getAttendence($student_id)

@@ -76,12 +76,10 @@ $cours_id = $_GET["id"];
                     </li>
 
                     <li class="nav-item">
-                        <?php
-                        echo "<a class='nav-link' href='absence.php?id=" . $cours_id . "'>"
-                            . "<i class='ti-pencil  menu-icon'></i>"
-                            . "<span class='menu-title'>Absences</span>"
-                            . "</a>"
-                        ?>
+                        <a class="nav-link" href="absence.php">
+                            <i class="ti-pencil  menu-icon"></i>
+                            <span class="menu-title">Absences</span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="upload.php">
@@ -102,14 +100,15 @@ $cours_id = $_GET["id"];
                                 <div class="card-body">
                                     <h4 class="card-title">Notes</h4>
                                     <?php
-                                    require_once('../../../BLL/notesManager.php');
+                                    require_once('../../../BLL/presencesManager.php');
                                     require_once('../../../BLL/usersManager.php');
+                                    $profiles =  GetAllStudentsbycour($cours_id);
                                     if (isset($_POST['submitBtn'])) {
-                                        $profiles =  GetAllStudentsbycour($cours_id);
-
                                         for ($i = 0; $i < count($profiles); $i++) {
-                                            $note = $_POST[$profiles[$i]->getId()];
-                                            addNotes($cours_id, $profiles[$i]->getId(), $note);
+                                            $status = "P";
+                                            if (isset($_POST[$profiles[$i]->getId()]))
+                                                $status = $_POST[$profiles[$i]->getId()];
+                                             addPresence($cours_id, $profiles[$i]->getId(), $status);
                                         }
                                         echo "<script type='text/javascript'>"
                                             . " window.location.href='cours.php?id=" . $cours_id . "';"
@@ -121,7 +120,6 @@ $cours_id = $_GET["id"];
                                             <table class="table table-striped">
                                                 <?php
                                                 require_once('../../../BLL/formationManager.php');
-                                                $profiles =  GetAllStudentsbycour($cours_id);
 
                                                 if ($profiles == null) {
                                                     echo "no results";
@@ -152,7 +150,7 @@ $cours_id = $_GET["id"];
                                                             . "<td>" . $profiles[$i]->getNom() . "</td>"
 
                                                             . "<td>" . GetFormationname($profiles[$i]->getFormationId()) . "</td>"
-                                                            . "<td><input type='text' name=" . $profiles[$i]->getId() . " class='form-control-1 notes' style='width: 2.5rem;'></td>"
+                                                            . "<td><input type='checkbox' name=" . $profiles[$i]->getId() . " value='" . "A" . "' class='form-control-1 notes' style='width: 2.5rem;'></td>"
                                                             . "</tr>";
                                                     }
                                                 }

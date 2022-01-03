@@ -109,140 +109,161 @@ session_start();
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
+          <?php
 
-          <div class="row">
+          require_once('../../../BLL/usersManager.php');
+          include_once("../../../DTO/user.php");
 
-            <div class="col-lg-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Etudiants</h4>
+          if (isset($_POST['submitBtn'])) {
+            $id = $_POST['submitBtn'];
 
-                  <div class="table-responsive">
-                    <table class="table table-striped">
-                      <?php
-                      require_once('../../../BLL/usersManager.php');
-                      require_once('../../../BLL/formationManager.php');
-                      include_once("../../../DTO/user.php");
-                      $profiles = getAllStudents();
+            if (deleteUser($id)) {
+              echo "<script type='text/javascript'>"
+                . " window.location.href='View_Students.php';"
+                . " </script> ";
+            } else {
+              echo "<script type='text/javascript'>"
+                . " window.location.href='View_Students.php';"
+                . "alert('Delete Failed');"
+                . " </script> ";
+            }
+          }
+          ?>
 
-                      if ($profiles == null) {
-                        echo "no results";
-                      } else {
-                        echo
-                        "<thead>" .
-                          "<tr>" .
-                          "<th>" .
-                          "Id" .
-                          "</th>" .
-                          "<th>" .
-                          "Prenom" .
-                          "</th>" .
-                          "<th>" .
-                          "Nom" .
-                          "</th>" .
-                          "<th>" .
-                          "email personel" .
-                          "</th>" .
-                          "<th>" .
-                          "email universitaire" .
-                          "</th>" .
-                          "<th>" .
-                          "Formation" .
-                          "</th>" .
-                          "<th>" .
-                          "Delete" .
-                          "</th>" .
-                          "</tr>" .
-                          "</thead>";
+          <form method="POST">
+            <div class="row">
 
-                        for ($i = 0; $i < count($profiles); $i++) {
+              <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Etudiants</h4>
+
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <?php
+                        require_once('../../../BLL/usersManager.php');
+                        require_once('../../../BLL/formationManager.php');
+                        include_once("../../../DTO/user.php");
+                        $profiles = getAllStudents();
+
+                        if ($profiles == null) {
+                          echo "no results";
+                        } else {
                           echo
-                          "<tr>"
-                            . "<td>" . $profiles[$i]->getId() . "</td>"
-                            . "<td>" . $profiles[$i]->getPrenom() . "</td>"
-                            . "<td>" . $profiles[$i]->getNom() . "</td>"
-                            . "<td>" . $profiles[$i]->getEmail_personel() . "</td>"
-                            . "<td>" . $profiles[$i]->getEmail_universitaire() . "</td>"
-                            . "<td>" . GetFormationname($profiles[$i]->getFormationId()) . "</td>"
-                            . "<td><a class='btn btn-danger'  href='../deleteuser.php?id=".$profiles[$i]->getId()."'>Delete</a></td>"
-                            . "</tr>";
+                          "<thead>" .
+                            "<tr>" .
+                            "<th>" .
+                            "Id" .
+                            "</th>" .
+                            "<th>" .
+                            "Prenom" .
+                            "</th>" .
+                            "<th>" .
+                            "Nom" .
+                            "</th>" .
+                            "<th>" .
+                            "email personel" .
+                            "</th>" .
+                            "<th>" .
+                            "email universitaire" .
+                            "</th>" .
+                            "<th>" .
+                            "Formation" .
+                            "</th>" .
+                            "<th>" .
+                            "Delete" .
+                            "</th>" .
+                            "</tr>" .
+                            "</thead>";
+
+                          for ($i = 0; $i < count($profiles); $i++) {
+                            echo
+                            "<tr>"
+                              . "<td>" . $profiles[$i]->getId() . "</td>"
+                              . "<td>" . $profiles[$i]->getPrenom() . "</td>"
+                              . "<td>" . $profiles[$i]->getNom() . "</td>"
+                              . "<td>" . $profiles[$i]->getEmail_personel() . "</td>"
+                              . "<td>" . $profiles[$i]->getEmail_universitaire() . "</td>"
+                              . "<td>" . GetFormationname($profiles[$i]->getFormationId()) . "</td>"
+                              . "<td><button class='btn btn-danger' name='submitBtn' value='" . $profiles[$i]->getId() . "'>Delete</button></td>"
+                              . "</tr>";
+                          }
                         }
-                      }
-                      ?>
-                    </table>
+                        ?>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
+
             </div>
+            <div class="row">
 
-          </div>
-          <div class="row">
+              <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Profs</h4>
 
-            <div class="col-lg-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Profs</h4>
-
-                  <div class="table-responsive">
-                    <table class="table table-striped">
-                      <?php
-                      require_once('../../../BLL/usersManager.php');
-                      require_once('../../../BLL/formationManager.php');
-                      include_once("../../../DTO/user.php");
-                      $profiles = getAllProf();
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <?php
+                        require_once('../../../BLL/usersManager.php');
+                        require_once('../../../BLL/formationManager.php');
+                        include_once("../../../DTO/user.php");
+                        $profiles = getAllProf();
 
 
-                      if ($profiles == null) {
-                        echo "no results";
-                      } else {
-                        echo
-                        "<thead>" .
-                          "<tr>" .
-                          "<th>" .
-                          "Id" .
-                          "</th>" .
-                          "<th>" .
-                          "Prenom" .
-                          "</th>" .
-                          "<th>" .
-                          "Nom" .
-                          "</th>" .
-                          "<th>" .
-                          "email personel" .
-                          "</th>" .
-                          "<th>" .
-                          "email universitaire" .
-                          "</th>" .
-                          "<th>" .
-                          "Delete" .
-                          "</th>" .
-                          "</tr>" .
-                          "</thead>";
-
-                        for ($i = 0; $i < count($profiles); $i++) {
+                        if ($profiles == null) {
+                          echo "no results";
+                        } else {
                           echo
-                          "<tr>"
-                            . "<td>" . $profiles[$i]->getId() . "</td>"
-                            . "<td>" . $profiles[$i]->getPrenom() . "</td>"
-                            . "<td>" . $profiles[$i]->getNom() . "</td>"
-                            . "<td>" . $profiles[$i]->getEmail_personel() . "</td>"
-                            . "<td>" . $profiles[$i]->getEmail_universitaire() . "</td>"
-                            . "<td><a class='btn btn-danger'  href='../deleteuser.php?id=".$profiles[$i]->getId()."'>Delete</a></td>"
-                            . "</tr>";
+                          "<thead>" .
+                            "<tr>" .
+                            "<th>" .
+                            "Id" .
+                            "</th>" .
+                            "<th>" .
+                            "Prenom" .
+                            "</th>" .
+                            "<th>" .
+                            "Nom" .
+                            "</th>" .
+                            "<th>" .
+                            "email personel" .
+                            "</th>" .
+                            "<th>" .
+                            "email universitaire" .
+                            "</th>" .
+                            "<th>" .
+                            "Delete" .
+                            "</th>" .
+                            "</tr>" .
+                            "</thead>";
+
+                          for ($i = 0; $i < count($profiles); $i++) {
+                            echo
+                            "<tr>"
+                              . "<td>" . $profiles[$i]->getId() . "</td>"
+                              . "<td>" . $profiles[$i]->getPrenom() . "</td>"
+                              . "<td>" . $profiles[$i]->getNom() . "</td>"
+                              . "<td>" . $profiles[$i]->getEmail_personel() . "</td>"
+                              . "<td>" . $profiles[$i]->getEmail_universitaire() . "</td>"
+                              . "<td><button class='btn btn-danger' name='submitBtn' name='submitBtn' value='" . $profiles[$i]->getId() . "'>Delete</button></td>"
+                              . "</tr>";
+                          }
                         }
-                      }
-                      ?>
-                    </table>
+                        ?>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-
-          </div>
+          </form>
         </div>
-
       </div>
+
     </div>
+  </div>
   </div>
   <!-- container-scroller -->
   <!-- plugins:js -->

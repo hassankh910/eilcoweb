@@ -148,7 +148,36 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4>Add Formation</h4>
-                                    <form class="forms-sample" action="../addformation.php" method="POST">
+                                    <?php
+
+                                    include_once("../../../DTO/formation.php");
+
+                                    if (isset($_POST['submitBtn'])) {
+
+
+                                        $nom = $_POST['nom'];
+
+                                        try {
+                                            $formation = new formation();
+                                            $formation->setNom($nom);
+
+                                            if (addnewFormation($formation)) {
+                                                echo "<script type='text/javascript'>"
+                                                    . " window.location.href='AddFormation.php';"
+                                                    . "alert('formation added!');"
+                                                    . " </script> ";
+                                            } else {
+                                                echo "<script type='text/javascript'>"
+                                                    . " window.location.href='AddFormation.php';"
+                                                    .  "alert('Faild to add formation!');"
+                                                    . " </script> ";
+                                            }
+                                        } catch (Exception $exc) {
+                                            echo $exc->getTraceAsString();
+                                        }
+                                    }
+                                    ?>
+                                    <form class="forms-sample" method="POST">
                                         <div class="form-group">
                                             <label for="nom">Nom</label>
                                             <input type="text" class="form-control" name="nom" placeholder="Nom Formation">

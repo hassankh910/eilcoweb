@@ -32,7 +32,10 @@ session_start();
 
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                            <img src="images/faces/face28.jpg" alt="profile" />
+                            <?php
+                            require("../../../DTO/user.php");
+                            echo "<h3>" . unserialize($_SESSION['loggeduser'])->getUsername() . "</h3>";
+                            ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                             <a class="dropdown-item">
@@ -89,7 +92,6 @@ session_start();
                     <table class="table table-striped">
                         <?php
                         require('../../../BLL/coursManager.php');
-                        require('../../../DTO/user.php');
                         $u = new user();
                         $u = unserialize($_SESSION['loggeduser']);
                         $courses = getCoursbystudent($u->getId());
@@ -115,7 +117,7 @@ session_start();
                             "</th>" .
                             "</tr>" .
                             "</thead>";
-                        if ($courses != null)
+                        if ($courses != null) {
                             for ($i = 0; $i < count($courses); $i++) {
                                 echo "<tr>"
                                     . "<td>" . $courses[$i]->getAbreviation() . "</td>"
@@ -127,13 +129,14 @@ session_start();
                                 $totalNbCredit = $totalNbCredit + $courses[$i]->getNb_credits();
                                 $moyenne = $moyenne + getNoteCour($u->getId(), $courses[$i]->getId()) * $courses[$i]->getNb_credits();
                             }
-                        echo "<tr>"
-                            . "<td></td>"
-                            . "<td>Moyenne</td>"
-                            . "<td>".$moyenne / $totalNbCredit."</td>"
-                            . "<td>" . $totalNbCredit . "</td>"
-                            . "<td>" . $moyenne . "</td>"
-                            . "</tr>";
+                            echo "<tr>"
+                                . "<td></td>"
+                                . "<td>Moyenne</td>"
+                                . "<td>" . $moyenne / $totalNbCredit . "</td>"
+                                . "<td>" . $totalNbCredit . "</td>"
+                                . "<td>" . $moyenne . "</td>"
+                                . "</tr>";
+                        }
                         ?>
                     </table>
                 </div>

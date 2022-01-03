@@ -111,56 +111,77 @@
                                     <h4 class="card-title">Etudiants</h4>
 
                                     <div class="table-responsive">
-                                        <table class="table table-striped">
-                                            <?php
-                                            require_once('../../../BLL/usersManager.php');
-                                            require_once('../../../BLL/coursManager.php');
-                                            require_once('../../../BLL/formationManager.php');
-                                            include_once("../../../DTO/cour.php");
-                                            $profiles = getAllCours();
+                                        <?php
 
+                                        require_once('../../../BLL/coursManager.php');
+                                        include_once("../../../DTO/cour.php");
 
-                                            if ($profiles == null) {
-                                                echo "no results";
+                                        if (isset($_POST['submitBtn'])) {
+                                            $id = $_POST['submitBtn'];
+                                            if (deleteCour($id)) {
+                                                echo "<script type='text/javascript'>"
+                                                    . " window.location.href='ViewCourses.php';"
+                                                    . " </script> ";
                                             } else {
-                                                echo
-                                                "<thead>" .
-                                                    "<tr>" .
-                                                    "<th>" .
-                                                    "Abreviation" .
-                                                    "</th>" .
-                                                    "<th>" .
-                                                    "Nom" .
-                                                    "</th>" .
-                                                    "<th>" .
-                                                    "Prof" .
-                                                    "</th>" .
-                                                    "<th>" .
-                                                    "Formation" .
-                                                    "</th>" .
-                                                    "<th>" .
-                                                    "Nombre de credits" .
-                                                    "</th>" .
-                                                    "<th>" .
-                                                    "Delete" .
-                                                    "</th>" .
-                                                    "</tr>" .
-                                                    "</thead>";
-
-                                                for ($i = 0; $i < count($profiles); $i++) {
-                                                    echo
-                                                    "<tr>"
-                                                        . "<td>" . $profiles[$i]->getAbreviation() . "</td>"
-                                                        . "<td>" . $profiles[$i]->getNom() . "</td>"
-                                                        . "<td>" . getProfName($profiles[$i]->getProf_id()) . "</td>"
-                                                        . "<td>" .  GetFormationname($profiles[$i]->getFormation_id()) . "</td>"
-                                                        . "<td>" . $profiles[$i]->getNb_credits() . "</td>"
-                                                        . "<td><a class='btn btn-danger' href='../deletecours.php?id=".$profiles[$i]->getId()."'>Delete</a></td>"
-                                                        . "</tr>";
-                                                }
+                                                echo "<script type='text/javascript'>"
+                                                    . " window.location.href='ViewCourses.php';"
+                                                    . "alert('Delete Failed');"
+                                                    . " </script> ";
                                             }
-                                            ?>
-                                        </table>
+                                        }
+                                        ?>
+
+                                        <form method="POST">
+                                            <table class="table table-striped">
+                                                <?php
+                                                require_once('../../../BLL/usersManager.php');
+                                                require_once('../../../BLL/formationManager.php');
+                                                $profiles = getAllCours();
+
+
+                                                if ($profiles == null) {
+                                                    echo "no results";
+                                                } else {
+                                                    echo
+                                                    "<thead>" .
+                                                        "<tr>" .
+                                                        "<th>" .
+                                                        "Abreviation" .
+                                                        "</th>" .
+                                                        "<th>" .
+                                                        "Nom" .
+                                                        "</th>" .
+                                                        "<th>" .
+                                                        "Prof" .
+                                                        "</th>" .
+                                                        "<th>" .
+                                                        "Formation" .
+                                                        "</th>" .
+                                                        "<th>" .
+                                                        "Nombre de credits" .
+                                                        "</th>" .
+                                                        "<th>" .
+                                                        "Delete" .
+                                                        "</th>" .
+                                                        "</tr>" .
+                                                        "</thead>";
+
+                                                    for ($i = 0; $i < count($profiles); $i++) {
+                                                        $prof = getProfName($profiles[$i]->getProf_id());
+                                                        echo
+                                                        "<tr>"
+                                                            . "<td>" . $profiles[$i]->getAbreviation() . "</td>"
+                                                            . "<td>" . $profiles[$i]->getNom() . "</td>"
+                                                            . "<td>" . strtoupper($prof->getNom()) . " " . ucfirst($prof->getPrenom()) . "</td>"
+                                                            . "<td>" .  GetFormationname($profiles[$i]->getFormation_id()) . "</td>"
+                                                            . "<td>" . $profiles[$i]->getNb_credits() . "</td>"
+                                                            . "<td><button class='btn btn-danger' name='submitBtn' value='" . $profiles[$i]->getId() . "'>Delete</button></td>"
+                                                            . "</tr>";
+                                                    }
+                                                }
+                                                ?>
+                                            </table>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

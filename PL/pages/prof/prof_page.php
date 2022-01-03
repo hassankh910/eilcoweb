@@ -32,9 +32,11 @@ session_start();
                 <ul class="navbar-nav navbar-nav-right">
 
                     <li class="nav-item nav-profile dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                            <!-- <img src="images/faces/face28.jpg" alt="profile" /> -->
-                   
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                            <?php
+                            require("../../../DTO/user.php");
+                            echo "<h3>" . unserialize($_SESSION['loggeduser'])->getUsername() . "</h3>";
+                            ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                             <a class="dropdown-item">
@@ -76,24 +78,25 @@ session_start();
                     <!-- hon el content li bl nos-->
                     <?php
                     require('../../../BLL/coursManager.php');
-                    require('../../../DTO/user.php');
 
                     $u = new user();
                     $u = unserialize($_SESSION['loggeduser']);
                     $courses = getCoursbyProf($u->getId());
                     echo "<div class='course-panel row'>";
-                    for ($i = 0; $i < count($courses); $i++) {
-                        echo "<div class='card col-md-4' style='width: 18rem;'>"
-                        ."<a href='cours.php?id=".$courses[$i]->getId()."' style='color: black; text-decoration: none; cursor: pointer'>"
-                        ."<div class='res-circle'>"
-                        ."<div class='circle-txt'>".$courses[$i]->getAbreviation()."</div>"
-                        ."</div>"
-                        ."<div class='card-body'>"
-                        ."<p class='card-text'>".$courses[$i]->getNom()."</p>"
-                        ."</div>"
-                        ."</a>"
-                        ."</div>";}
-                        echo "</div>"
+                    if ($courses != null)
+                        for ($i = 0; $i < count($courses); $i++) {
+                            echo "<div class='card col-md-4' style='width: 18rem;'>"
+                                . "<a href='cours.php?id=" . $courses[$i]->getId() . "' style='color: black; text-decoration: none; cursor: pointer'>"
+                                . "<div class='res-circle'>"
+                                . "<div class='circle-txt'>" . $courses[$i]->getAbreviation() . "</div>"
+                                . "</div>"
+                                . "<div class='card-body'>"
+                                . "<p class='card-text'>" . $courses[$i]->getNom() . "</p>"
+                                . "</div>"
+                                . "</a>"
+                                . "</div>";
+                        }
+                    echo "</div>"
 
                     ?>
                 </div>
@@ -109,7 +112,7 @@ session_start();
 
     <!-- plugins:js lal profile-->
     <script src="../../assets/vendors/base/vendor.bundle.base.js"></script>
-        <!-- lal nav wl responsive -->
+    <!-- lal nav wl responsive -->
     <script src="../../scripts/admin/js/off-canvas.js"></script>
     <!-- lal calendar-->
     <script src="../../scripts/student/js/rome.js"></script>

@@ -31,8 +31,11 @@ $cours_id = $_GET["id"];
                 <ul class="navbar-nav navbar-nav-right">
 
                     <li class="nav-item nav-profile dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                            <img src="images/faces/face28.jpg" alt="profile" />
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                            <?php
+                            require("../../../DTO/user.php");
+                            echo "<h3>" . unserialize($_SESSION['loggeduser'])->getUsername() . "</h3>";
+                            ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                             <a class="dropdown-item">
@@ -70,10 +73,12 @@ $cours_id = $_GET["id"];
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="absence.php">
-                            <i class="ti-pencil  menu-icon"></i>
-                            <span class="menu-title">Absences</span>
-                        </a>
+                    <?php
+                        echo "<a class='nav-link' href='absence.php?id=".$cours_id."'>"
+                            ."<i class='ti-pencil  menu-icon'></i>"
+                            ."<span class='menu-title'>Absences</span>"
+                       ."</a>"
+                        ?>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="upload.php">
@@ -99,7 +104,6 @@ $cours_id = $_GET["id"];
           <?php
           require_once('../../../BLL/usersManager.php');
           require_once('../../../BLL/formationManager.php');
-          include_once("../../../DTO/user.php");
            $profiles =  GetAllStudentsbycour($cours_id);
           if ($profiles == null) {
             echo "no results";
