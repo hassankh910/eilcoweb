@@ -1,5 +1,7 @@
 <?php
+
 session_start();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +18,7 @@ session_start();
     <link rel="stylesheet" href="../../styles/rome.css">
     <link href='../../assets/lib/main.css' rel='stylesheet' />
     <script src='../../assets/lib/main.js'></script>
+
 </head>
 
 <body>
@@ -29,6 +32,7 @@ session_start();
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
 
                 <ul class="navbar-nav navbar-nav-right">
+
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
                             <?php
@@ -56,41 +60,27 @@ session_start();
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="student_page.php">
+                        <a class="nav-link" href="prof_page.php">
                             <i class="ti-home menu-icon"></i>
                             <span class="menu-title">Mes Cours</span>
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link" href="edt.php">
-                            <i class="ti-user menu-icon"></i>
+                            <i class="ti-calendar  menu-icon"></i>
                             <span class="menu-title">Emploi de temps </span>
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="notes.php">
-                            <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Mes Notes</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="absence.php">
-                            <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Mes Absences</span>
-                        </a>
-                    </li>
                 </ul>
             </nav>
             <!-- partial -->
             <div class="main-panel">
-                <div class="content-wrapper" style="padding: 2%;">
+                <div class="content-wrapper">
                     <!-- hon el content li bl nos-->
 
                     <div id='calendar'></div>
-                    
+
                     <script>
                         document.addEventListener("DOMContentLoaded", function() {
                             var calendarEl = document.getElementById("calendar");
@@ -107,7 +97,7 @@ session_start();
                                             require("../../../BLL/coursManager.php");
                                             require("../../../BLL/edtManager.php");
                                             require("../../../DTO/edt.php");
-                                            $edts = edtbyformation(unserialize($_SESSION['loggeduser'])->getFormationId());
+                                            $edts = edtbyprof(unserialize($_SESSION['loggeduser'])->getId());
                                             for ($i = 0; $i < count($edts); $i++) {
                                                 $cour = getCoursbyId($edts[$i]->getCours_Id());
                                                 echo "{"

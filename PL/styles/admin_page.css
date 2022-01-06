@@ -13495,3 +13495,60 @@ dl li {
     font-family: arial, sans-serif;
     font-weight: bold;
 }
+
+.adminstyle {
+    margin-top: 2rem;
+    margin-left: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    /* width: 100%; */
+    /* display: flex; */
+    /* justify-content: center; */
+}
+
+.boxes {
+    width: 6rem;
+    height: 6rem;
+    background-color: var(--our-blue);
+    margin-left: 0.5rem;
+    border-radius: 1rem;
+    display: flex;
+}
+
+.boxes-card {
+    /* margin-left: 1rem; */
+    /* margin-top: 1rem; */
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.card.tale-bg {
+    background: blue;
+}
+
+.card-people {
+    position: relative;
+    padding-top: 20px;
+}
+
+.card-people img {
+    border-radius: 20px;
+    width: 100%;
+}
+
+.card-people .weather-info {
+    position: absolute;
+    top: 30px;
+    right: 24px;
+}
+
+.card-people .weather-info sup {
+    font-size: 18px;
+}
+
+.card-people .weather-info .location {
+    font-size: 20px;
+    margin-bottom: 0;
+}

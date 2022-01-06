@@ -29,6 +29,33 @@ function getProfs()
     return getAllProf();
 }
 
+function GetAllStudentsCount()
+{
+    return  CountS();
+}
+
+function getAllProfC()
+{
+    return CountP();
+}
+
+function getAllCP()
+{
+    return CountCP();
+}
+
+function getAllInfo()
+{
+    return CountInfo();
+}
+function getAllGEE()
+{
+    return CountGee();
+}
+function getAllGI()
+{
+    return CountIndu();
+}
 function getProfName($prof_id)
 {
     return getProfbyId($prof_id);
@@ -53,6 +80,8 @@ function addStudent($user)
     $user->setPassword($password);
     $user->setEmail_universitaire($email_universitaire);
     $user->setRole(2);
+    sendInfobyEmail($user);
+
     return AddUser($user);
 }
 
@@ -66,6 +95,7 @@ function addProf($user)
     $user->setPassword($password);
     $user->setEmail_universitaire($email_universitaire);
     $user->setRole(3);
+    sendInfobyEmail($user);
     return AddUser($user);
 }
 
@@ -79,4 +109,21 @@ function randomPassword()
         $pass[] = $alphabet[$n];
     }
     return implode($pass); //turn the array into a string
+}
+
+function sendInfobyEmail($user)
+{
+    $username = $user->getUsername();
+    $pass = $user->getPassword();
+    $email = $user->getEmail_universitaire();
+    $to       = $user->getEmail_personel();
+    $subject  = 'uni information';
+    $message  = "Hi,\nusernname: " . $username . "\npassword: " . $pass . "\nemail: " . $email;
+    $headers  = 'From: [your_gmail_account_username]@gmail.com' . "\r\n" .
+        'MIME-Version: 1.0' . "\r\n" .
+        'Content-type: text/html; charset=utf-8';
+    if (mail($to, $subject, $message, $headers))
+        echo "Email sent";
+    else
+        echo "Email sending failed";
 }

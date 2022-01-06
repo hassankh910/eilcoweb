@@ -17,3 +17,5 @@ function AddNotetostudent($cours_id, $etudiant_id, $note)
     }
     return $addResponse;
 }
+
+?>

@@ -81,10 +81,12 @@ $cours_id = $_GET["id"];
                         ?>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="upload.php">
-                            <i class="ti-import menu-icon"></i>
-                            <span class="menu-title">Documents</span>
-                        </a>
+                        <?php
+                        echo "<a class='nav-link' href='documents.php?id=".$cours_id."'>"
+                            ."<i class='ti-import menu-icon'></i>"
+                            ."<span class='menu-title'>Documents</span>"
+                       ."</a>"
+                        ?>
                     </li>
                 </ul>
             </nav>

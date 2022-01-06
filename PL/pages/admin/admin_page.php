@@ -101,57 +101,135 @@
             <div class="main-panel">
                 <div class="content-wrapper">
 
-                    <div class="row">
-                        <div class="col-md-7 grid-margin stretch-card">
-                            <div class="card">
+                    <div class="adminstyle">
+                        <div class="col-md-4 mb-4  ">
+                            <div class="card card-tale">
                                 <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped">
-                                            <?php
-                                            require_once("../../../BLL/formationManager.php");
-                                            require_once("../../../BLL/usersManager.php");
-                                            $formations = getAllFormations();
-                                            if ($formations == null) {
-                                                echo "no results";
-                                            } else {
-                                                echo
-                                                "<tr>"
-                                                    . "<th>" . "Formation" . "</th>"
-                                                    . "<th>" . "Nb Etudiant" . "</th>"
-                                                    . "</tr>";
+                                    <?php
+                                    require_once("../../../BLL/usersManager.php");
 
-                                                for ($i = 0; $i < count($formations); $i++) {
-                                                    echo
-                                                    "<tr>"
-                                                        . "<td>" . $formations[$i]->getNom() . "</td>"
-                                                        . "<td>" . GetStudentsbyFormation($formations[$i]->getId()) . "</td>"
-                                                        . "</tr>";
-                                                }
-                                            }
-                                            ?>
-                                        </table>
-                                    </div>
+
+                                    echo " <p class= mb-4 >Nombres des etudiants</p>";
+                                    echo
+                                    "<p>" . GetAllStudentsCount() . "</p>";
+
+
+
+                                    ?>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-5 grid-margin stretch-card">
-                            <div class="card">
+                        <div class="col-md-4 mb-4 stretch-card transparent">
+                            <div class="card card-dark-blue">
                                 <div class="card-body">
+                                    <?php
+                                    require_once("../../../BLL/usersManager.php");
 
+
+                                    echo " <p class= mb-4 >Nombres des Profs</p>";
+                                    echo
+                                    "<p>" . getAllProfC() . "</p>";
+
+
+
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4 mb-4 stretch-card transparent">
+                            <div class="card card-dark-blue">
+                                <div class="card-body">
+                                    <p class="mb-4">Nombres des Secretaires</p>
+                                    <p>2</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- content-wrapper ends -->
-                <!-- partial:partials/_footer.html -->
+                <div class="adminstyle">
 
-                <!-- partial -->
+                    <div class="col-md-6 grid-margin stretch-card">
+                        <div class="card tale-bg ">
+                            <div class="card-people mt-auto ">
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 grid-margin transparent">
+                        <div class="row">
+
+                            <div class="col-md-6 mb-4 stretch-card transparent">
+                                <div class="card card-tale">
+                                    <div class="card-body">
+                                        <?php
+                                        require_once("../../../BLL/usersManager.php");
+
+
+                                        echo " <p class= mb-4 >Nombres des CP</p>";
+                                        echo
+                                        "<p>" . getAllCP() . "</p>";
+
+
+
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4 stretch-card transparent">
+                                <div class="card card-dark-blue">
+                                    <div class="card-body">
+                                        <?php
+                                        require_once("../../../BLL/usersManager.php");
+                                        echo " <p class= mb-4 >Nombres des Info</p>";
+                                        echo
+                                        "<p>" . getAllInfo() . "</p>";
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                                <div class="card card-light-blue">
+                                    <div class="card-body">
+                                        <?php
+                                        require_once("../../../BLL/usersManager.php");
+                                        echo " <p class= mb-4 >Nombres des GEE</p>";
+                                        echo
+                                        "<p>" . getAllGEE() . "</p>";
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 stretch-card transparent">
+                                <div class="card card-light-danger">
+                                    <div class="card-body">
+                                        <?php
+                                        require_once("../../../BLL/usersManager.php");
+                                        echo " <p class= mb-4 >Nombres des GI</p>";
+                                        echo
+                                        "<p>" . getAllGI() . "</p>";
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
-
-            <!-- main-panel ends -->
         </div>
-        <!-- page-body-wrapper ends -->
+
+    </div>
+
+    </div>
 
     </div>
 

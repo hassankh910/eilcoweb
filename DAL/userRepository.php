@@ -50,6 +50,7 @@ function getUserByUsername($username)
                 $userResponse->setNationalite($row["nationalite"]);
                 $userResponse->setPhone($row["phone"]);
                 $userResponse->setAdresse($row["Adresse"]);
+                $userResponse->setFormationId($row["formation_id"]);
             }
         }
         closeConnection($conn);
@@ -213,7 +214,7 @@ function getAttendence($student_id)
 
     $presences = null;
 
-    $query = "SELECT * from presence where etudiant_id=?;";
+    $query = "SELECT * from presence where etudiant_id=? and status ='A';";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $student_id);
     $stmt->execute();
@@ -260,7 +261,7 @@ function getAllStudentsbycours($cours_id)
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $cours_id);
     $stmt->execute();
-    $result =$stmt->get_result();
+    $result = $stmt->get_result();
     if (mysqli_num_rows($result) == false) {
         closeConnection($conn);
         return null;
@@ -285,4 +286,151 @@ function getAllStudentsbycours($cours_id)
     }
     closeConnection($conn);
     return $users;
+}
+
+
+function CountS()
+{
+    $conn = openConnection();
+    $nbstudents = 0;
+
+    try {
+        $sql = "SELECT Count(*) as nbstudents from users where role=2"; // SQL with parameters
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) == false) {
+            closeConnection($conn);
+            return null;
+        }
+
+        if ($result->num_rows > 0) {
+            if ($row = $result->fetch_assoc()) {
+                $nbstudents = ($row["nbstudents"]);
+            }
+        }
+        closeConnection($conn);
+    } catch (Exception $ex) {
+    }
+    return $nbstudents;
+}
+
+function CountP()
+{
+    $conn = openConnection();
+    $nbprof = 0;
+
+    try {
+        $sql = "SELECT Count(*) as nbprof from users where role=3"; // SQL with parameters
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) == false) {
+            closeConnection($conn);
+            return null;
+        }
+
+        if ($result->num_rows > 0) {
+            if ($row = $result->fetch_assoc()) {
+                $nbprof = ($row["nbprof"]);
+            }
+        }
+        closeConnection($conn);
+    } catch (Exception $ex) {
+    }
+    return $nbprof;
+}
+
+function CountCP()
+{
+    $conn = openConnection();
+    $nbcp = 0;
+
+    try {
+        $sql = "SELECT Count(*) as nbcp FROM users,formation where
+        users.formation_id =formation.idformation and nomformation LIKE 'CP%' and users.role=2"; // SQL with parameters
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) == false) {
+            closeConnection($conn);
+            return null;
+        }
+
+        if ($result->num_rows > 0) {
+            if ($row = $result->fetch_assoc()) {
+                $nbcp = ($row["nbcp"]);
+            }
+        }
+        closeConnection($conn);
+    } catch (Exception $ex) {
+    }
+    return $nbcp;
+}
+
+function CountInfo()
+{
+    $conn = openConnection();
+    $nbinfo = 0;
+
+    try {
+        $sql = "SELECT Count(*) as nbinfo FROM users,formation where
+        users.formation_id =formation.idformation and nomformation LIKE '%info%' and users.role=2"; // SQL with parameters
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) == false) {
+            closeConnection($conn);
+            return null;
+        }
+
+        if ($result->num_rows > 0) {
+            if ($row = $result->fetch_assoc()) {
+                $nbinfo = ($row["nbinfo"]);
+            }
+        }
+        closeConnection($conn);
+    } catch (Exception $ex) {
+    }
+    return $nbinfo;
+}
+function CountGee()
+{
+    $conn = openConnection();
+    $nbgee = 0;
+
+    try {
+        $sql = "SELECT Count(*) as nbgee FROM users,formation where
+        users.formation_id =formation.idformation and nomformation LIKE '%gee%' and users.role=2"; // SQL with parameters
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) == false) {
+            closeConnection($conn);
+            return null;
+        }
+
+        if ($result->num_rows > 0) {
+            if ($row = $result->fetch_assoc()) {
+                $nbgee = ($row["nbgee"]);
+            }
+        }
+        closeConnection($conn);
+    } catch (Exception $ex) {
+    }
+    return $nbgee;
+}
+function CountIndu()
+{
+    $conn = openConnection();
+    $nbindu = 0;
+
+    try {
+        $sql = "SELECT Count(*) as nbindu FROM users,formation where
+        users.formation_id =formation.idformation and nomformation LIKE '%gi%' and users.role=2"; // SQL with parameters
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) == false) {
+            closeConnection($conn);
+            return null;
+        }
+
+        if ($result->num_rows > 0) {
+            if ($row = $result->fetch_assoc()) {
+                $nbindu = ($row["nbindu"]);
+            }
+        }
+        closeConnection($conn);
+    } catch (Exception $ex) {
+    }
+    return $nbindu;
 }
