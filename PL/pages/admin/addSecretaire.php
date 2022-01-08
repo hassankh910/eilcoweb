@@ -142,14 +142,14 @@
                       $user->setFormationId($formation_id);
                       $user->setNationalite($nationalite);
 
-                      if (addStudent($user)) {
+                      if (addSecretaire($user)) {
                         echo "<script type='text/javascript'>"
-                          . " window.location.href='AddStudent.php';"
-                          . "alert('student added!');"
+                          . " window.location.href='addSecretaire.php';"
+                          . "alert('secretaire added!');"
                           . " </script> ";
                       } else {
                         echo "<script type='text/javascript'>"
-                          . " window.location.href='AddStudent.php';"
+                          . " window.location.href='addSecretaire.php';"
                           .  "alert('Faild to add student!');"
                           . " </script> ";
                       }
@@ -187,23 +187,6 @@
             <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-
-
-
-                  <div class="form-group">
-                    <select class="select" name="formation">
-                      <?php
-                      require_once("../../../BLL/formationManager.php");
-                      $formation = getAllFormations();
-                      echo "<option value=" . '"' . "0" . '"' . ">" . "Formation" . "</option>";
-                      if ($formation != null) {
-                        for ($i = 0; $i < count($formation); $i++) {
-                          echo "<option value=" . '"' . $formation[$i]->getId() . '"' . ">" . $formation[$i]->getNom() . "</option>";
-                        }
-                      }
-                      ?>
-                    </select>
-                  </div>
                   <div class="form-group">
                     <select class="select" name="nationalite">
                       <option value="not set">Nationalite</option>

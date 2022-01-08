@@ -57,6 +57,10 @@ session_start();
                                 echo "<script type='text/javascript'>"
                                     . " window.location.href='./pages/admin/admin_page.php';"
                                     . "</script>";
+                            } else if (unserialize($_SESSION['loggeduser'])->getRole() == 4) {
+                                echo "<script type='text/javascript'>"
+                                    . " window.location.href='./pages/secretaire/secretaire-page.php';"
+                                    . "</script>";
                             }
                         } else {
                             echo "<script type='text/javascript'>"

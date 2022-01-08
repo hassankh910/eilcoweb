@@ -56,9 +56,9 @@ session_start();
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="student_page.php">
+                        <a class="nav-link" href="View_cours.php">
                             <i class="ti-home menu-icon"></i>
-                            <span class="menu-title">Mes Cours</span>
+                            <span class="menu-title">Les formations</span>
                         </a>
                     </li>
 
@@ -72,14 +72,14 @@ session_start();
                     <li class="nav-item">
                         <a class="nav-link" href="notes.php">
                             <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Mes Notes</span>
+                            <span class="menu-title">Les Notes</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="absence.php">
                             <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Mes Absences</span>
+                            <span class="menu-title">Les Absences</span>
                         </a>
                     </li>
                 </ul>
@@ -96,7 +96,7 @@ session_start();
                             var calendarEl = document.getElementById("calendar");
 
                             var calendar = new FullCalendar.Calendar(calendarEl, {
-                                initialView: "timeGridWeek",
+                                initialView: "dayGridMonth",
                                 initialDate: Date.now(),
                                 headerToolbar: {
                                     left: "prev,next today",
@@ -124,6 +124,12 @@ session_start();
                     </script>
                 </div>
             </div>
+            <nav class="sidebar calendarbar" id="sidebar">
+                <form action="#" class="row">
+                    <div class="col-md-12">
+                        <div id="inline_cal"></div>
+                    </div>
+                </form>
         </div>
     </div>
 

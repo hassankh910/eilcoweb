@@ -32,7 +32,7 @@ $cours_id = $_GET["id"];
                 <ul class="navbar-nav navbar-nav-right">
 
                     <li class="nav-item nav-profile dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
                             <?php
                             require("../../../DTO/user.php");
                             echo "<h3>" . unserialize($_SESSION['loggeduser'])->getUsername() . "</h3>";
@@ -82,10 +82,12 @@ $cours_id = $_GET["id"];
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="upload.php">
-                            <i class="ti-import menu-icon"></i>
-                            <span class="menu-title">Documents</span>
-                        </a>
+                        <?php
+                        echo "<a class='nav-link' href='documents.php?id=" . $cours_id . "'>"
+                            . "<i class='ti-import menu-icon'></i>"
+                            . "<span class='menu-title'>Documents</span>"
+                            . "</a>"
+                        ?>
                     </li>
                 </ul>
             </nav>
@@ -108,7 +110,7 @@ $cours_id = $_GET["id"];
                                             $status = "P";
                                             if (isset($_POST[$profiles[$i]->getId()]))
                                                 $status = $_POST[$profiles[$i]->getId()];
-                                             addPresence($cours_id, $profiles[$i]->getId(), $status);
+                                            addPresence($cours_id, $profiles[$i]->getId(), $status);
                                         }
                                         echo "<script type='text/javascript'>"
                                             . " window.location.href='cours.php?id=" . $cours_id . "';"
@@ -137,7 +139,7 @@ $cours_id = $_GET["id"];
                                                         "Formation" .
                                                         "</th>" .
                                                         "<th>" .
-                                                        "Note" .
+                                                        "Abs" .
                                                         "</th>" .
 
                                                         "</tr>" .

@@ -14,8 +14,7 @@ session_start();
     <link rel="stylesheet" href="../../styles/admin_page.css">
 
     <link rel="stylesheet" href="../../styles/rome.css">
-    <link href='../../assets/lib/main.css' rel='stylesheet' />
-    <script src='../../assets/lib/main.js'></script>
+
 </head>
 
 <body>
@@ -56,9 +55,9 @@ session_start();
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="student_page.php">
+                        <a class="nav-link" href="View_cours.php">
                             <i class="ti-home menu-icon"></i>
-                            <span class="menu-title">Mes Cours</span>
+                            <span class="menu-title">Les formations</span>
                         </a>
                     </li>
 
@@ -72,58 +71,52 @@ session_start();
                     <li class="nav-item">
                         <a class="nav-link" href="notes.php">
                             <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Mes Notes</span>
+                            <span class="menu-title">Les Notes</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="absence.php">
                             <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Mes Absences</span>
+                            <span class="menu-title">Les Absences</span>
                         </a>
                     </li>
                 </ul>
             </nav>
             <!-- partial -->
             <div class="main-panel">
-                <div class="content-wrapper" style="padding: 2%;">
+                <div class="content-wrapper">
                     <!-- hon el content li bl nos-->
+                    <?php
+                    require('../../../BLL/coursManager.php');
+                    $u = new user();
+                    $u = unserialize($_SESSION['loggeduser']);
+                    $courses = getCoursbystudent($u->getId());
+                    echo "<div class='course-panel row'>";
+                    if ($courses != null)
+                        for ($i = 0; $i < count($courses); $i++) {
+                            echo "<div class='card col-md-4' style='width: 18rem;'>"
+                                . "<a href='detailcour.php?id=" . $courses[$i]->getId() . "' style='color: black; text-decoration: none; cursor: pointer'>"
+                                . "<div class='res-circle'>"
+                                . "<div class='circle-txt'>" . $courses[$i]->getAbreviation() . "</div>"
+                                . "</div>"
+                                . "<div class='card-body'>"
+                                . "<p class='card-text'>" . $courses[$i]->getNom() . "</p>"
+                                . "</div>"
+                                . "</a>"
+                                . "</div>";
+                        }
+                    echo "</div>"
 
-                    <div id='calendar'></div>
-                    
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function() {
-                            var calendarEl = document.getElementById("calendar");
-
-                            var calendar = new FullCalendar.Calendar(calendarEl, {
-                                initialView: "timeGridWeek",
-                                initialDate: Date.now(),
-                                headerToolbar: {
-                                    left: "prev,next today",
-                                    center: "title",
-                                    right: "dayGridMonth,timeGridWeek,timeGridDay"
-                                },
-                                events: [<?php
-                                            require("../../../BLL/coursManager.php");
-                                            require("../../../BLL/edtManager.php");
-                                            require("../../../DTO/edt.php");
-                                            $edts = edtbyformation(unserialize($_SESSION['loggeduser'])->getFormationId());
-                                            for ($i = 0; $i < count($edts); $i++) {
-                                                $cour = getCoursbyId($edts[$i]->getCours_Id());
-                                                echo "{"
-                                                    . "title: '" . $cour->getNom() . "',"
-                                                    . "start: '" . $edts[$i]->getStartDate() . "T" . $edts[$i]->getStartTime() . "',"
-                                                    . "end: '" . $edts[$i]->getEndDate() . "T" . $edts[$i]->getEndTime() . "'},";
-                                            }
-                                            echo "{}";
-                                            ?>]
-                            });
-
-                            calendar.render();
-                        });
-                    </script>
+                    ?>
                 </div>
             </div>
+            <nav class="sidebar calendarbar" id="sidebar">
+                <form action="#" class="row">
+                    <div class="col-md-12">
+                        <div id="inline_cal"></div>
+                    </div>
+                </form>
         </div>
     </div>
 

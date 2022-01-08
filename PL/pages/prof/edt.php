@@ -76,7 +76,7 @@ session_start();
             </nav>
             <!-- partial -->
             <div class="main-panel">
-                <div class="content-wrapper">
+                <div class="content-wrapper" style="padding: 2%;">
                     <!-- hon el content li bl nos-->
 
                     <div id='calendar'></div>
@@ -86,7 +86,7 @@ session_start();
                             var calendarEl = document.getElementById("calendar");
 
                             var calendar = new FullCalendar.Calendar(calendarEl, {
-                                initialView: "dayGridMonth",
+                                initialView: "timeGridWeek",
                                 initialDate: Date.now(),
                                 headerToolbar: {
                                     left: "prev,next today",
@@ -114,12 +114,6 @@ session_start();
                     </script>
                 </div>
             </div>
-            <nav class="sidebar calendarbar" id="sidebar">
-                <form action="#" class="row">
-                    <div class="col-md-12">
-                        <div id="inline_cal"></div>
-                    </div>
-                </form>
         </div>
     </div>
 
