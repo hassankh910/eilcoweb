@@ -172,7 +172,35 @@ function getAllProf()
     closeConnection($conn);
     return $users;
 }
-
+function getAllSec()
+{
+    $conn = openConnection();
+    $query = "SELECT * FROM users where role=4;";
+    $result = mysqli_query($conn, $query);
+    if (mysqli_num_rows($result) == false) {
+        closeConnection($conn);
+        return null;
+    }
+    $i = 0;
+    while ($row = mysqli_fetch_array($result)) {
+        $user = new user();
+        $user->setId($row["iduser"]);
+        $user->setPrenom($row["prenom"]);
+        $user->setNom($row["nom"]);
+        $user->setDate_de_naissance($row["date_de_naissance"]);
+        $user->setEmail_personel($row["email_personel"]);
+        $user->setSexe($row["sexe"]);
+        $user->setPhone($row["phone"]);
+        $user->setAdresse($row["Adresse"]);
+        $user->setUsername($row["username"]);
+        $user->setEmail_universitaire($row["email_universitaire"]);
+        $user->setNationalite($row["nationalite"]);
+        $users[$i] = $user;
+        $i++;
+    }
+    closeConnection($conn);
+    return $users;
+}
 function getProfbyId($prof_id)
 {
     $conn = openConnection();

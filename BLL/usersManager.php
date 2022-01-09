@@ -84,13 +84,12 @@ function addStudent($user)
 
     return AddUser($user);
 }
-
 function addSecretaire($user)
 {
     $username = $user->getPrenom()[0] . $user->getNom();
     $password = randomPassword();
     // $password = strtoupper( $user->getPrenom()[0]) . strtoupper( $user->getPrenom()[1]) . strtoupper($user->getNom[0]) . strtoupper($user->getNom[1]) . $user->getDate_de_naissance();
-    $email_universitaire = $user->getPrenom() . "." . $user->getNom() . ".sec@eilco-ulco.fr";
+    $email_universitaire = $user->getPrenom() . "." . $user->getNom() . ".elv@eilco-ulco.fr";
     $user->setUsername($username);
     $user->setPassword($password);
     $user->setEmail_universitaire($email_universitaire);
@@ -99,7 +98,6 @@ function addSecretaire($user)
 
     return AddUser($user);
 }
-
 function addProf($user)
 {
     $username = $user->getPrenom()[0] . $user->getNom();

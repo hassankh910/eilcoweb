@@ -258,7 +258,68 @@ session_start();
                     </div>
                   </div>
                 </div>
-              </div>
+            </div>
+            <div class="row">
+
+              <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Secretaires</h4>
+
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <?php
+                        require_once('../../../BLL/usersManager.php');
+                        require_once('../../../BLL/formationManager.php');
+                        include_once("../../../DTO/user.php");
+                        $profiles = getAllSec();
+
+
+                        if ($profiles == null) {
+                          echo "no results";
+                        } else {
+                          echo
+                          "<thead>" .
+                            "<tr>" .
+                            "<th>" .
+                            "Id" .
+                            "</th>" .
+                            "<th>" .
+                            "Prenom" .
+                            "</th>" .
+                            "<th>" .
+                            "Nom" .
+                            "</th>" .
+                            "<th>" .
+                            "email personel" .
+                            "</th>" .
+                            "<th>" .
+                            "email universitaire" .
+                            "</th>" .
+                            "<th>" .
+                            "Delete" .
+                            "</th>" .
+                            "</tr>" .
+                            "</thead>";
+
+                          for ($i = 0; $i < count($profiles); $i++) {
+                            echo
+                            "<tr>"
+                              . "<td>" . $profiles[$i]->getId() . "</td>"
+                              . "<td>" . $profiles[$i]->getPrenom() . "</td>"
+                              . "<td>" . $profiles[$i]->getNom() . "</td>"
+                              . "<td>" . $profiles[$i]->getEmail_personel() . "</td>"
+                              . "<td>" . $profiles[$i]->getEmail_universitaire() . "</td>"
+                              . "<td><button class='btn btn-danger' name='submitBtn' name='submitBtn' value='" . $profiles[$i]->getId() . "'>Delete</button></td>"
+                              . "</tr>";
+                          }
+                        }
+                        ?>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+            </div>
           </form>
         </div>
       </div>
