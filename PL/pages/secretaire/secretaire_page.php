@@ -37,7 +37,7 @@ session_start();
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                             <a class="dropdown-item">
-                                <i class="ti-settings text-primary"></i> Profile
+                                <i class="ti-user text-primary"></i> Profile
                             </a>
                             <a class="dropdown-item" href="../logout.php">
                                 <i class="ti-power-off text-primary"></i> Logout
@@ -55,30 +55,9 @@ session_start();
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="View_cours.php">
+                        <a class="nav-link" href="secretaire_page.php">
                             <i class="ti-home menu-icon"></i>
                             <span class="menu-title">Les formations</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="edt.php">
-                            <i class="ti-user menu-icon"></i>
-                            <span class="menu-title">Emploi de temps </span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="notes.php">
-                            <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Les Notes</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="absence.php">
-                            <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Les Absences</span>
                         </a>
                     </li>
                 </ul>
@@ -88,8 +67,8 @@ session_start();
                 <div class="content-wrapper">
                     <!-- hon el content li bl nos-->
                     <div class="form-group">
-                    <?php
-                        require_once("../../../BLL/formationManager.php"); 
+                        <?php
+                        require_once("../../../BLL/formationManager.php");
                         echo "<option value=" . '"' . "0" . '"' . ">" . "Formation:" . "</option>";
                         $u = new user();
                         $u = unserialize($_SESSION['loggeduser']);
@@ -98,7 +77,7 @@ session_start();
                         if ($formation != null)
                             for ($i = 0; $i < count($formation); $i++) {
                                 echo "<div class='card col-md-4' style='width: 18rem;'>"
-                                    . "<a href='detailcour.php?id=" . $formation[$i]->getId() . "' style='color: black; text-decoration: none; cursor: pointer'>"
+                                    . "<a href='detail_formations.php?id=" . $formation[$i]->getId() . "' style='color: black; text-decoration: none; cursor: pointer'>"
                                     . "<div class='card-body'>"
                                     . "<p class='card-text'>" . $formation[$i]->getNom() . "</p>"
                                     . "</div>"
@@ -106,10 +85,10 @@ session_start();
                                     . "</div>";
                             }
                         echo "</div>"
-                    ?>
-                    </select>
+                        ?>
+                        </select>
                     </div>
-                    
+
                 </div>
             </div>
             <nav class="sidebar calendarbar" id="sidebar">
@@ -120,6 +99,7 @@ session_start();
                 </form>
         </div>
     </div>
+
 
     <!-- plugins:js lal profile-->
     <script src="../../assets/vendors/base/vendor.bundle.base.js"></script>

@@ -3,7 +3,6 @@ session_start();
 $cours_id = $_GET["id"];
 ?>
 <!DOCTYPE html>
-<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -39,7 +38,7 @@ $cours_id = $_GET["id"];
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                             <a class="dropdown-item">
-                                <i class="ti-settings text-primary"></i> Profile
+                                <i class="ti-user text-primary"></i> Profile
                             </a>
                             <a class="dropdown-item" href="../logout.php">
                                 <i class="ti-power-off text-primary"></i> Logout

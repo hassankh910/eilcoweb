@@ -3,7 +3,6 @@ session_start();
 $id = $_GET['id'];
 ?>
 <!DOCTYPE html>
-<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -38,7 +37,7 @@ $id = $_GET['id'];
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                             <a class="dropdown-item">
-                                <i class="ti-settings text-primary"></i> Profile
+                                <i class="ti-user text-primary"></i> Profile
                             </a>
                             <a class="dropdown-item" href="../logout.php">
                                 <i class="ti-power-off text-primary"></i> Logout
@@ -57,7 +56,7 @@ $id = $_GET['id'];
                 <ul class="nav">
                     <li class="nav-item">
                         <a class="nav-link" href="student_page.php">
-                            <i class="ti-home menu-icon"></i>
+                            <i class="ti-book menu-icon"></i>
                             <span class="menu-title">Mes Cours</span>
                         </a>
                     </li>
@@ -71,18 +70,17 @@ $id = $_GET['id'];
 
                     <li class="nav-item">
                         <a class="nav-link" href="notes.php">
-                            <i class="ti-book menu-icon"></i>
+                            <i class="ti-medall menu-icon"></i>
                             <span class="menu-title">Mes Notes</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="absence.php">
-                            <i class="ti-book menu-icon"></i>
+                            <i class="ti-pencil menu-icon"></i>
                             <span class="menu-title">Mes Absences</span>
                         </a>
                     </li>
-                </ul>
             </nav>
             <!-- partial -->
             <div class="main-panel">

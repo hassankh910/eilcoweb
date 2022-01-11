@@ -2,7 +2,6 @@
 session_start();
 ?>
 <!DOCTYPE html>
-<html lang="en">
 
 <head>
   <!-- Required meta tags -->
@@ -73,7 +72,7 @@ session_start();
                 <li class="nav-item"> <a class="nav-link" href="./AddStudent.php">Add Student </a></li>
                 <li class="nav-item"> <a class="nav-link" href="./AddProf.php">Add Prof </a></li>
                 <li class="nav-item"> <a class="nav-link" href="./AddSecretaire.php">Add Secretaire </a></li>
-                <li class="nav-item"> <a class="nav-link" href="./View_Students.php">View Users </a></li>
+                <li class="nav-item"> <a class="nav-link" href="./ViewUsers.php">View Users </a></li>
 
               </ul>
             </div>
@@ -120,11 +119,11 @@ session_start();
 
             if (deleteUser($id)) {
               echo "<script type='text/javascript'>"
-                . " window.location.href='View_Students.php';"
+                . " window.location.href='ViewUsers.php';"
                 . " </script> ";
             } else {
               echo "<script type='text/javascript'>"
-                . " window.location.href='View_Students.php';"
+                . " window.location.href='ViewUsers.php';"
                 . "alert('Delete Failed');"
                 . " </script> ";
             }
@@ -258,6 +257,7 @@ session_start();
                     </div>
                   </div>
                 </div>
+              </div>
             </div>
             <div class="row">
 
@@ -319,6 +319,7 @@ session_start();
                     </div>
                   </div>
                 </div>
+              </div>
             </div>
           </form>
         </div>

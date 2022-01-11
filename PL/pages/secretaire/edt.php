@@ -38,7 +38,7 @@ session_start();
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                             <a class="dropdown-item">
-                                <i class="ti-settings text-primary"></i> Profile
+                                <i class="ti-user text-primary"></i> Profile
                             </a>
                             <a class="dropdown-item" href="../logout.php">
                                 <i class="ti-power-off text-primary"></i> Logout
@@ -56,7 +56,7 @@ session_start();
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="View_cours.php">
+                        <a class="nav-link" href="secretaire_page.php">
                             <i class="ti-home menu-icon"></i>
                             <span class="menu-title">Les formations</span>
                         </a>

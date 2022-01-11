@@ -56,6 +56,12 @@ function getAllGI()
 {
     return CountIndu();
 }
+
+function recoverPassword($email){
+    $user = getUserByEmailPerso($email);
+    sendInfobyEmail($user);
+}
+
 function getProfName($prof_id)
 {
     return getProfbyId($prof_id);
