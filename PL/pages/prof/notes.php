@@ -38,7 +38,7 @@ $cours_id = $_GET["id"];
                             ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" href='../profile.php'>
                                 <i class="ti-user text-primary"></i> Profile
                             </a>
                             <a class="dropdown-item" href="../logout.php">

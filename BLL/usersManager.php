@@ -56,6 +56,10 @@ function getAllGI()
 {
     return CountIndu();
 }
+function UpdatePassword($user_id,$pass)
+{
+        return UpdatePass($user_id,$pass);    
+}
 
 function recoverPassword($email){
     $user = getUserByEmailPerso($email);

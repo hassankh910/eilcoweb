@@ -13506,6 +13506,11 @@ dl li {
     /* justify-content: center; */
 }
 
+.adminstyle h3{
+    font-size: 1.2rem;
+    text-align: center;
+}
+
 .boxes {
     width: 6rem;
     height: 6rem;

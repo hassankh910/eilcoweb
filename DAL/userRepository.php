@@ -498,3 +498,21 @@ function CountIndu()
     }
     return $nbindu;
 }
+
+function UpdatePass($user_id,$pass)
+{
+    $conn = openConnection();
+    $updateResponse = false;
+    try {
+        $sql = "UPDATE  users set password=? where iduser=?";
+        $stmt = $conn->prepare($sql);
+      
+        $stmt->bind_param("si",$pass,$user_id);
+        if ($stmt->execute())
+            $updateResponse = true;
+        $stmt->close();
+        closeConnection($conn);
+    } catch (Exception $ex) {
+    }
+    return $updateResponse;
+}
