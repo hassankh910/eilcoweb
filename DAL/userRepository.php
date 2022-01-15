@@ -52,6 +52,78 @@ function getUserByUsername($username)
                 $userResponse->setAdresse($row["Adresse"]);
                 $userResponse->setFormationId($row["formation_id"]);
             }
+      
+        }
+        closeConnection($conn);
+    } catch (Exception $ex) {
+    }
+    return $userResponse;
+}
+function getUserById($id)
+{
+    $conn = openConnection();
+    $userResponse = null;
+
+    try {
+        $sql = "SELECT * FROM users WHERE iduser=? "; // SQL with parameters
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result(); // get the mysqli result
+        if ($result->num_rows > 0) {
+            $userResponse = new user();
+            if ($row = $result->fetch_assoc()) {
+                $userResponse->setUsername($row["username"]);
+                $userResponse->setId($row["iduser"]);
+                $userResponse->setPrenom($row["prenom"]);
+                $userResponse->setNom($row["nom"]);
+                $userResponse->setRole($row["role"]);
+                $userResponse->setDate_de_naissance($row["date_de_naissance"]);
+                $userResponse->setPassword($row["password"]);
+                $userResponse->setEmail_personel($row["email_personel"]);
+                $userResponse->setEmail_universitaire($row["email_universitaire"]);
+                $userResponse->setSexe($row["sexe"]);
+                $userResponse->setNationalite($row["nationalite"]);
+                $userResponse->setPhone($row["phone"]);
+                $userResponse->setAdresse($row["Adresse"]);
+                $userResponse->setFormationId($row["formation_id"]);
+            }
+        }
+        closeConnection($conn);
+    } catch (Exception $ex) {
+    }
+    return $userResponse;
+}
+
+function getUserByEmailPerso($email)
+{
+    $conn = openConnection();
+    $userResponse = null;
+
+    try {
+        $sql = "SELECT * FROM users WHERE email_personel=? "; // SQL with parameters
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result(); // get the mysqli result
+        if ($result->num_rows > 0) {
+            $userResponse = new user();
+            if ($row = $result->fetch_assoc()) {
+                $userResponse->setUsername($row["username"]);
+                $userResponse->setId($row["iduser"]);
+                $userResponse->setPrenom($row["prenom"]);
+                $userResponse->setNom($row["nom"]);
+                $userResponse->setRole($row["role"]);
+                $userResponse->setDate_de_naissance($row["date_de_naissance"]);
+                $userResponse->setPassword($row["password"]);
+                $userResponse->setEmail_personel($row["email_personel"]);
+                $userResponse->setEmail_universitaire($row["email_universitaire"]);
+                $userResponse->setSexe($row["sexe"]);
+                $userResponse->setNationalite($row["nationalite"]);
+                $userResponse->setPhone($row["phone"]);
+                $userResponse->setAdresse($row["Adresse"]);
+                $userResponse->setFormationId($row["formation_id"]);
+            }
         }
         closeConnection($conn);
     } catch (Exception $ex) {
@@ -111,7 +183,39 @@ function GetUserbyFormation($formation_id)
     }
     return $nbstudents;
 }
-
+function GetUserbyFormationdetails($formation_id)
+{
+    $conn = openConnection();
+    $query = "SELECT * from users where users.formation_id=? and users.role=2";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $formation_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if (mysqli_num_rows($result) == false) {
+        closeConnection($conn);
+        return null;
+    }
+    $i = 0;
+    while ($row = mysqli_fetch_array($result)) {
+        $user = new user();
+        $user->setId($row["iduser"]);
+        $user->setPrenom($row["prenom"]);
+        $user->setNom($row["nom"]);
+        $user->setDate_de_naissance($row["date_de_naissance"]);
+        $user->setEmail_personel($row["email_personel"]);
+        $user->setSexe($row["sexe"]);
+        $user->setPhone($row["phone"]);
+        $user->setAdresse($row["Adresse"]);
+        $user->setUsername($row["username"]);
+        $user->setEmail_universitaire($row["email_universitaire"]);
+        $user->setNationalite($row["nationalite"]);
+        $user->setFormationId($row["formation_id"]);
+        $users[$i] = $user;
+        $i++;
+    }
+    closeConnection($conn);
+    return $users;
+}
 function AddUser($user)
 {
     $conn = openConnection();
@@ -461,4 +565,22 @@ function CountIndu()
     } catch (Exception $ex) {
     }
     return $nbindu;
+}
+
+function UpdatePass($user_id,$pass)
+{
+    $conn = openConnection();
+    $updateResponse = false;
+    try {
+        $sql = "UPDATE  users set password=? where iduser=?";
+        $stmt = $conn->prepare($sql);
+      
+        $stmt->bind_param("si",$pass,$user_id);
+        if ($stmt->execute())
+            $updateResponse = true;
+        $stmt->close();
+        closeConnection($conn);
+    } catch (Exception $ex) {
+    }
+    return $updateResponse;
 }

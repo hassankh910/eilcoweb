@@ -71,7 +71,7 @@
                 <li class="nav-item"> <a class="nav-link" href="./AddStudent.php">Add Student </a></li>
                 <li class="nav-item"> <a class="nav-link" href="./AddProf.php">Add Prof </a></li>
                 <li class="nav-item"> <a class="nav-link" href="./AddSecretaire.php">Add Secretaire </a></li>
-                <li class="nav-item"> <a class="nav-link" href="./View_Students.php">View Users </a></li>
+                <li class="nav-item"> <a class="nav-link" href="./ViewUsers.php">View Users </a></li>
 
               </ul>
             </div>

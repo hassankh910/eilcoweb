@@ -10,6 +10,10 @@ function UserByUsername($username)
 {
     return getUserByUsername($username);
 }
+function UserByid($id)
+{
+    return getUserById($id);
+}
 function getAllStudents()
 {
     return getStudents();
@@ -18,7 +22,10 @@ function GetStudentsbyFormation($formation_id)
 {
     return GetUserbyFormation($formation_id);
 }
-
+function GetUsersbyFormationdetail($formation_id)
+{
+    return GetUserbyFormationdetails($formation_id);
+}
 function  GetAllStudentsbycour($cours_id)
 {
     return getAllStudentsbycours($cours_id);
@@ -56,6 +63,16 @@ function getAllGI()
 {
     return CountIndu();
 }
+function UpdatePassword($user_id,$pass)
+{
+        return UpdatePass($user_id,$pass);    
+}
+
+function recoverPassword($email){
+    $user = getUserByEmailPerso($email);
+    sendInfobyEmail($user);
+}
+
 function getProfName($prof_id)
 {
     return getProfbyId($prof_id);

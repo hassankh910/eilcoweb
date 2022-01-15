@@ -28,4 +28,7 @@ function getNoteCour($student_id,$cours_id) {
 function getCoursbyProf($prof_id){
     return getCoursbyProfId($prof_id);
 }
+function getCoursbyFormationIddetails($formation_id){
+return getCoursbyFormationId($formation_id);
+}
 ?>

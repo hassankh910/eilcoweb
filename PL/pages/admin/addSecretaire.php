@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 
 <head>
   <!-- Required meta tags -->
@@ -71,7 +70,7 @@
                 <li class="nav-item"> <a class="nav-link" href="./AddStudent.php">Add Student </a></li>
                 <li class="nav-item"> <a class="nav-link" href="./AddProf.php">Add Prof </a></li>
                 <li class="nav-item"> <a class="nav-link" href="./AddSecretaire.php">Add Secretaire </a></li>
-                <li class="nav-item"> <a class="nav-link" href="./View_Students.php">View Users </a></li>
+                <li class="nav-item"> <a class="nav-link" href="./ViewUsers.php">View Users </a></li>
 
               </ul>
             </div>
@@ -419,7 +418,79 @@
 
           </div>
         </div>
+        <div class="table-responsive">
+                                        <?php
 
+                                        require_once('../../../BLL/coursManager.php');
+                                        include_once("../../../DTO/cour.php");
+
+                                        if (isset($_POST['submitBtn'])) {
+                                            $id = $_POST['submitBtn'];
+                                            if (deleteCour($id)) {
+                                                echo "<script type='text/javascript'>"
+                                                    . " window.location.href='ViewCourses.php';"
+                                                    . " </script> ";
+                                            } else {
+                                                echo "<script type='text/javascript'>"
+                                                    . " window.location.href='ViewCourses.php';"
+                                                    . "alert('Delete Failed');"
+                                                    . " </script> ";
+                                            }
+                                        }
+                                        ?>
+
+                                        <form method="POST">
+                                            <table class="table table-striped">
+                                                <?php
+                                                require_once('../../../BLL/usersManager.php');
+                                                require_once('../../../BLL/formationManager.php');
+                                                $profiles = getAllCours();
+
+
+                                                if ($profiles == null) {
+                                                    echo "no results";
+                                                } else {
+                                                    echo
+                                                    "<thead>" .
+                                                        "<tr>" .
+                                                        "<th>" .
+                                                        "Abreviation" .
+                                                        "</th>" .
+                                                        "<th>" .
+                                                        "Nom" .
+                                                        "</th>" .
+                                                        "<th>" .
+                                                        "Prof" .
+                                                        "</th>" .
+                                                        "<th>" .
+                                                        "Formation" .
+                                                        "</th>" .
+                                                        "<th>" .
+                                                        "Nombre de credits" .
+                                                        "</th>" .
+                                                        "<th>" .
+                                                        "Delete" .
+                                                        "</th>" .
+                                                        "</tr>" .
+                                                        "</thead>";
+
+                                                    for ($i = 0; $i < count($profiles); $i++) {
+                                                        $prof = getProfName($profiles[$i]->getProf_id());
+                                                        echo
+                                                        "<tr>"
+                                                            . "<td>" . $profiles[$i]->getAbreviation() . "</td>"
+                                                            . "<td>" . $profiles[$i]->getNom() . "</td>"
+                                                            . "<td>" . strtoupper($prof->getNom()) . " " . ucfirst($prof->getPrenom()) . "</td>"
+                                                            . "<td>" .  GetFormationname($profiles[$i]->getFormation_id()) . "</td>"
+                                                            . "<td>" . $profiles[$i]->getNb_credits() . "</td>"
+                                                            . "<td><button class='btn btn-danger' name='submitBtn' value='" . $profiles[$i]->getId() . "'>Delete</button></td>"
+                                                            . "</tr>";
+                                                    }
+                                                }
+                                                ?>
+                                            </table>
+                                        </form>
+                                    </div>
       </div>
     </div>
   </div>

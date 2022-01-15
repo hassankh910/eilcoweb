@@ -59,7 +59,7 @@ session_start();
                                     . "</script>";
                             } else if (unserialize($_SESSION['loggeduser'])->getRole() == 4) {
                                 echo "<script type='text/javascript'>"
-                                    . " window.location.href='./pages/secretaire/secretaire-page.php';"
+                                    . " window.location.href='./pages/secretaire/secretaire_page.php';"
                                     . "</script>";
                             }
                         } else {
@@ -80,32 +80,25 @@ session_start();
                     </span>
                     <div class="wrap-input100 validate-input" data-validate="Enter username">
                         <i class="fa fa-user"></i>
-                        <input class="input100" type="text" name="username" placeholder="Username" autocomplete="off">
+                        <input class="input100" type="text" name="username" placeholder="Nom d'utilisateur" autocomplete="off">
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Enter password">
                         <i class="fa fa-lock"></i>
-                        <input class="input100" type="password" name="pass" placeholder="Password" autocomplete="off">
+                        <input class="input100" type="password" name="pass" placeholder="Mots de Passe" autocomplete="off">
                     </div>
 
-                    <div class="contact100-form-checkbox">
-                        <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember" <?php if (isset($_COOKIE['username'])) {
-                                                                                                        echo "checked='checked'";
-                                                                                                    } ?> value='1'>
-                        <label class="label-checkbox100" for="ckb1">
-                            Remember me
-                        </label>
-                    </div>
+
 
                     <div class="container-login100-form-btn">
                         <button class="login100-form-btn" name="submitBtn">
-                            Login
+                            Connexion
                         </button>
                     </div>
 
                     <div class="text-center p-t-20">
-                        <a class="txt1" href="#">
-                            Forgot Password?
+                        <a class="txt1" href="../PL/pages/forgotpass.php">
+                            Identifiants Oublies?
                         </a>
                     </div>
                 </form>

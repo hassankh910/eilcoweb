@@ -1,6 +1,7 @@
 <?php
-
 session_start();
+$id=$_GET['id'];
+$id_formation=$_GET['id_formation'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +31,6 @@ session_start();
 
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item nav-profile dropdown">
-                    <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
                             <?php
                             require("../../../DTO/user.php");
@@ -38,8 +38,8 @@ session_start();
                             ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                            <a class="dropdown-item" href='../profile.php'>
-                                <i class="ti-user text-primary"></i> Profile
+                            <a class="dropdown-item">
+                                <i class="ti-settings text-primary"></i> Profile
                             </a>
                             <a class="dropdown-item" href="../logout.php">
                                 <i class="ti-power-off text-primary"></i> Logout
@@ -71,16 +71,15 @@ session_start();
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="notes.php">
+                        <a class="nav-link" <?php echo "href='View_cours.php?id=".$id_formation."'"; ?>>
                             <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Les Notes</span>
+                            <span class="menu-title">Les Cours</span>
                         </a>
                     </li>
-
                     <li class="nav-item">
-                        <a class="nav-link" href="absence.php">
+                        <a class="nav-link" <?php echo "href='Notes.php?id_formation=".$id_formation."&id=".$id."'"; ?>>
                             <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Les Absences</span>
+                            <span class="menu-title">Les Notes</span>
                         </a>
                     </li>
                 </ul>
@@ -88,42 +87,46 @@ session_start();
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
-                    <!-- hon el content li bl nos-->
-                    <table class="table table-striped">
-                        <?php
-                        require('../../../BLL/usersManager.php');
-                        require('../../../BLL/coursManager.php');
-                        $u = new user();
-                        $u = unserialize($_SESSION['loggeduser']);
-                        $presences = getPresence($u->getId());
-                        echo
-                        "<thead>" .
-                            "<tr>" .
-                            "<th>" .
-                            "Abreviation" .
-                            "</th>" .
-                            "<th>" .
-                            "Nom" .
-                            "</th>" .
-                            "<th>" .
-                            "Status" .
-                            "</th>" .
-                            "<th>" .
-                            "Date" .
-                            "</th>" .
-                            "</tr>" .
-                            "</thead>";
-                        if ($presences != null)
-                            for ($i = 0; $i < count($presences); $i++) {
-                                echo "<tr>"
-                                    . "<td>" . getCoursbyId($presences[$i]->getCourId())->getAbreviation() . "</td>"
-                                    . "<td>" . getCoursbyId($presences[$i]->getCourId())->getNom() . "</td>"
-                                    . "<td>" . $presences[$i]->getStatus() . "</td>"
-                                    . "<td>" . $presences[$i]->getDate() . "</td>"
-                                    . "</tr>";
-                            }
-                        ?>
-                    </table>
+                <?php
+                    require('../../../BLL/coursManager.php');
+                    require('../../../BLL/usersManager.php');
+                    $cours = getCoursId($id);
+                    echo "<div class='cours'>"
+                        . "<h3 style='margin-top:2% ; margin-left:2%'>Cours :" . $cours->getNom() . "</h3>"
+                        . "<h4 style='margin-top:2% ; margin-left:2%'>Enseignant:";
+                    $prof = getProfName($cours->getProf_id());
+                    echo strtoupper($prof->getNom()) . " " . ucfirst($prof->getPrenom()) . "</h4>"
+                        . "<h5 style='margin-top:2% ; margin-left:2%'>Address mail : " . $prof->getEmail_universitaire() . "</h5>"
+                        . "</div>";
+                    ?>
+
+                    <?php
+                    echo "<table class='table table-striped'>";
+                    require("../../../BLL/documentsManager.php");
+                    $documents = getDocument($id);
+                    if (isset($_POST['downloadBtn'])) {
+                        $filepath = __DIR__ . "/../../../DAL/uploadeddocuments/" . $_POST['downloadBtn'];
+                        download($filepath);
+                    }
+                    echo "<thead>"
+                        . "<tr>"
+                        . "<th>Fichier</th>"
+                        . "<th>Date</th>"
+                        . "<th>Download</th>"
+                        . "</tr>"
+                        . "</thead>"
+                        . "<tbody>";
+                    if ($documents != null)
+                        for ($i = 0; $i < count($documents); $i++) {
+                            $_SESSION['fichierviser'] = $documents[$i]->getLien();
+                            echo "<tr>"
+                                . "<td>" . $documents[$i]->getNom() . "</td>"
+                                . "<td>" . $documents[$i]->getDate() . "</td>"
+                                . "<td><form method='POST'><button class='btn btn-link' name='downloadBtn' value='" . $documents[$i]->getLien() . "'><i class='ti-download menu-icon'></i></button></form></td>";
+                        }
+                    echo "</tbody></table>";
+                    ?>
+                    
                 </div>
             </div>
             <nav class="sidebar calendarbar" id="sidebar">

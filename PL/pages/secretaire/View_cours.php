@@ -1,5 +1,6 @@
 <?php
 session_start();
+$id=$_GET["id"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +56,7 @@ session_start();
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="View_cours.php">
+                        <a class="nav-link" href="secretaire_page.php">
                             <i class="ti-home menu-icon"></i>
                             <span class="menu-title">Les formations</span>
                         </a>
@@ -69,16 +70,9 @@ session_start();
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="notes.php">
+                        <a class="nav-link" <?php echo "href='View_cours.php?id=".$id."'"; ?>>
                             <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Les Notes</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="absence.php">
-                            <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Les Absences</span>
+                            <span class="menu-title">Les Cours</span>
                         </a>
                     </li>
                 </ul>
@@ -89,23 +83,28 @@ session_start();
                     <!-- hon el content li bl nos-->
                     <div class="form-group">
                     <?php
-                        require_once("../../../BLL/formationManager.php"); 
-                        echo "<option value=" . '"' . "0" . '"' . ">" . "Formation:" . "</option>";
-                        $u = new user();
-                        $u = unserialize($_SESSION['loggeduser']);
-                        $formation = getAllFormations();
-                        echo "<div class='course-panel row'>";
-                        if ($formation != null)
-                            for ($i = 0; $i < count($formation); $i++) {
-                                echo "<div class='card col-md-4' style='width: 18rem;'>"
-                                    . "<a href='detailcour.php?id=" . $formation[$i]->getId() . "' style='color: black; text-decoration: none; cursor: pointer'>"
-                                    . "<div class='card-body'>"
-                                    . "<p class='card-text'>" . $formation[$i]->getNom() . "</p>"
-                                    . "</div>"
-                                    . "</a>"
-                                    . "</div>";
-                            }
-                        echo "</div>"
+                    require('../../../BLL/coursManager.php');
+                    require("../../../DTO/formation.php");
+
+                    $courses = getCoursbyFormationIddetails($id) ;
+                    echo "<div class='course-panel row'>";
+                    if ($courses != null)
+                    
+                        for ($i = 0; $i < count($courses); $i++) {
+                            echo "<div class='card col-md-4' style='width: 18rem;'>"
+                                . "<a href='cours.php?id=" . $courses[$i]->getId() . "&id_formation=".$id."' style='color: black; text-decoration: none; cursor: pointer'>"
+                                . "<div class='res-circle'>"
+                                . "<div class='circle-txt'>" . $courses[$i]->getAbreviation() . "</div>"
+                                . "</div>"
+                                . "<div class='card-body'>"
+                                . "<p class='card-text'>" . $courses[$i]->getNom() . "</p>"
+                                . "</div>"
+                                . "</a>"
+                                . "</div>";
+                        }
+                    
+                    echo "</div>"
+                    
                     ?>
                     </select>
                     </div>

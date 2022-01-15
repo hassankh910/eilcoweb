@@ -5,3 +5,6 @@ function addNotes($cours_id, $etudiant_id, $note)
 {
     return AddNotetostudent($cours_id, $etudiant_id, $note);
 }
+function GetnotesByCours($cours_id){
+    return GetNotesByCoursId($cours_id);   
+}

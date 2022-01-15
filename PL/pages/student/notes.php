@@ -3,7 +3,6 @@
 session_start();
 ?>
 <!DOCTYPE html>
-<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -38,8 +37,8 @@ session_start();
                             ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                            <a class="dropdown-item">
-                                <i class="ti-settings text-primary"></i> Profile
+                            <a class="dropdown-item" href='../profile.php'>
+                                <i class="ti-user text-primary"></i> Profile
                             </a>
                             <a class="dropdown-item" href="../logout.php">
                                 <i class="ti-power-off text-primary"></i> Logout
@@ -58,7 +57,7 @@ session_start();
                 <ul class="nav">
                     <li class="nav-item">
                         <a class="nav-link" href="student_page.php">
-                            <i class="ti-home menu-icon"></i>
+                            <i class="ti-book menu-icon"></i>
                             <span class="menu-title">Mes Cours</span>
                         </a>
                     </li>
@@ -72,14 +71,14 @@ session_start();
 
                     <li class="nav-item">
                         <a class="nav-link" href="notes.php">
-                            <i class="ti-book menu-icon"></i>
+                            <i class="ti-medall menu-icon"></i>
                             <span class="menu-title">Mes Notes</span>
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="absence.php">
-                            <i class="ti-book menu-icon"></i>
+                            <i class="ti-pencil menu-icon"></i>
                             <span class="menu-title">Mes Absences</span>
                         </a>
                     </li>
