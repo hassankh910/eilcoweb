@@ -38,7 +38,7 @@ $id_formation=$_GET['id_formation'];
                             ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" href='../profile.php'>
                                 <i class="ti-settings text-primary"></i> Profile
                             </a>
                             <a class="dropdown-item" href="../logout.php">
@@ -64,7 +64,7 @@ $id_formation=$_GET['id_formation'];
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="edt.php">
+                        <a class="nav-link"<?php echo "href='edt.php?id=".$id_formation."'"?>>
                             <i class="ti-user menu-icon"></i>
                             <span class="menu-title">Emploi de temps </span>
                         </a>
@@ -78,8 +78,14 @@ $id_formation=$_GET['id_formation'];
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" <?php echo "href='Notes.php?id_formation=".$id_formation."&id=".$id."'"; ?>>
-                            <i class="ti-book menu-icon"></i>
+                            <i class="ti-medall menu-icon"></i>
                             <span class="menu-title">Les Notes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" <?php echo "href='absence.php?id_formation=".$id_formation."&id=".$id."'"; ?>>
+                            <i class="ti-pencil menu-icon"></i>
+                            <span class="menu-title">Les Absences</span>
                         </a>
                     </li>
                 </ul>

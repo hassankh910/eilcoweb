@@ -89,7 +89,6 @@ session_start();
                     <!-- hon el content li bl nos-->
 
                     <div id='calendar'></div>
-                    
                     <script>
                         document.addEventListener("DOMContentLoaded", function() {
                             var calendarEl = document.getElementById("calendar");

@@ -59,7 +59,7 @@ $cours_id = $_GET["id"];
                     <li class="nav-item">
                         <a class="nav-link" href="prof_page.php">
                             <i class="ti-home menu-icon"></i>
-                            <span class="menu-title">Home</span>
+                            <span class="menu-title">Mes Cours</span>
                         </a>
                     </li>
 

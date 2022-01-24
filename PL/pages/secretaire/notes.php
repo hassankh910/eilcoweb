@@ -1,7 +1,7 @@
 <?php
 session_start();
-$id=$_GET["id"];
-$id_formation=$_GET["id_formation"];
+$id = $_GET["id"];
+$id_formation = $_GET["id_formation"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +38,7 @@ $id_formation=$_GET["id_formation"];
                             ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" href='../profile.php'>
                                 <i class="ti-settings text-primary"></i> Profile
                             </a>
                             <a class="dropdown-item" href="../logout.php">
@@ -64,23 +64,29 @@ $id_formation=$_GET["id_formation"];
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="edt.php">
+                        <a class="nav-link" <?php echo "href='edt.php?id=" . $id_formation . "'" ?>>
                             <i class="ti-user menu-icon"></i>
                             <span class="menu-title">Emploi de temps </span>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" <?php echo "href='View_cours.php?id=".$id_formation."'"; ?>>
+                        <a class="nav-link" <?php echo "href='View_cours.php?id=" . $id_formation . "'"; ?>>
                             <i class="ti-book menu-icon"></i>
                             <span class="menu-title">Les Cours</span>
                         </a>
                     </li>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" <?php echo "href='Notes.php?id_formation=".$id_formation."&id=".$id."'"; ?>>
-                            <i class="ti-book menu-icon"></i>
+                        <a class="nav-link" <?php echo "href='Notes.php?id_formation=" . $id_formation . "&id=" . $id . "'"; ?>>
+                            <i class="ti-medall menu-icon"></i>
                             <span class="menu-title">Les Notes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" <?php echo "href='absence.php?id_formation=" . $id_formation . "&id=" . $id . "'"; ?>>
+                            <i class="ti-pencil menu-icon"></i>
+                            <span class="menu-title">Les Absences</span>
                         </a>
                     </li>
                 </ul>
@@ -88,10 +94,11 @@ $id_formation=$_GET["id_formation"];
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
-                <table class="table table-striped">
+                    <table class="table table-striped">
                         <?php
                         require('../../../BLL/notesManager.php');
                         require('../../../BLL/usersManager.php');
+                        require('../../../BLL/coursManager.php');
                         $courses = GetnotesByCours($id);
                         $totalNbCredit = 0;
                         $moyenne = 0;
@@ -99,10 +106,10 @@ $id_formation=$_GET["id_formation"];
                         "<thead>" .
                             "<tr>" .
                             "<th>" .
-                            "Abreviation" .
+                            "Nom" .
                             "</th>" .
                             "<th>" .
-                            "Nom" .
+                            "Prenom" .
                             "</th>" .
                             "<th>" .
                             "Note" .
@@ -116,39 +123,34 @@ $id_formation=$_GET["id_formation"];
                             "</tr>" .
                             "</thead>";
                         if ($courses != null) {
-                            echo count($courses);
-                            for ($i = 1; $i <= count($courses); $i++) {
-                                if($courses[$i]!=null) {
-                                    $s = UserByid($i);
+                            $c = getCoursbyId($id);
+                            echo "<h3>" . $c->getNom() . ":</h3> ";
+                            for ($i = 0; $i < count($courses); $i++) {
+                                $s = UserByid($courses[$i]->getEtudiantId());
+
                                 echo "<tr>"
-                                    . "<td>" . $i . "</td>"
                                     . "<td>" . $s->getNom() . "</td>"
-                                    . "<td>" . getNoteCour($u->getId(), $courses[$i]->getId()) . "</td>"
-                                    . "<td>" . $courses[$i]->getNb_credits() . "</td>"
-                                    . "<td>" . getNoteCour($u->getId(), $courses[$i]->getId()) * $courses[$i]->getNb_credits() . "</td>"
+                                    . "<td>" . $s->getPrenom() . "</td>"
+                                    . "<td>" . $courses[$i]->getNote() . "</td>"
+                                    . "<td>" . $c->getNb_credits() . "</td>"
+                                    . "<td>" . $courses[$i]->getNote() * $c->getNb_credits() . "</td>"
                                     . "</tr>";
-                                
-                                $totalNbCredit = $totalNbCredit + $courses[$i]->getNb_credits();
-                                $moyenne = $moyenne + getNoteCour($u->getId(), $courses[$i]->getId()) * $courses[$i]->getNb_credits();
-                                
-                            }}
-                            // echo "<tr>"
-                            //     . "<td></td>"
-                            //     . "<td>Moyenne</td>"
-                            //     . "<td>" . $moyenne / $totalNbCredit . "</td>"
-                            //     . "<td>" . $totalNbCredit . "</td>"
-                            //     . "<td>" . $moyenne . "</td>"
-                            //     . "</tr>";
-                        }
-                        else {
-                            echo "dfghjk";
+                                $moyenne = $moyenne + $courses[$i]->getNote();
+                            }
+                            echo "<tr>"
+                                . "<td></td>"
+                                . "<td>Moyenne</td>"
+                                . "<td>" . $moyenne . "</td>"
+                                . "<td></td>"
+                                . "<td>" . $moyenne / count($courses) . "</td>"
+                                . "</tr>";
                         }
                         ?>
                     </table>
-                    </div>
-                    </div>
-                    </div>
+                </div>
+            </div>
         </div>
+    </div>
     </div>
 
     <!-- plugins:js lal profile-->

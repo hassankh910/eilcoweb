@@ -1,6 +1,7 @@
 <?php
-
 session_start();
+$id = $_GET["id"];
+$id_formation = $_GET["id_formation"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +31,6 @@ session_start();
 
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item nav-profile dropdown">
-                    <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
                             <?php
                             require("../../../DTO/user.php");
@@ -39,7 +39,7 @@ session_start();
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                             <a class="dropdown-item" href='../profile.php'>
-                                <i class="ti-user text-primary"></i> Profile
+                                <i class="ti-settings text-primary"></i> Profile
                             </a>
                             <a class="dropdown-item" href="../logout.php">
                                 <i class="ti-power-off text-primary"></i> Logout
@@ -71,15 +71,21 @@ session_start();
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="notes.php">
+                        <a class="nav-link" <?php echo "href='View_cours.php?id=" . $id_formation . "'"; ?>>
                             <i class="ti-book menu-icon"></i>
+                            <span class="menu-title">Les Cours</span>
+                        </a>
+                    </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" <?php echo "href='Notes.php?id_formation=" . $id_formation . "&id=" . $id . "'"; ?>>
+                            <i class="ti-medall menu-icon"></i>
                             <span class="menu-title">Les Notes</span>
                         </a>
                     </li>
-
                     <li class="nav-item">
-                        <a class="nav-link" href="absence.php">
-                            <i class="ti-book menu-icon"></i>
+                        <a class="nav-link" <?php echo "href='absence.php?id_formation=" . $id_formation . "&id=" . $id . "'"; ?>>
+                            <i class="ti-pencil menu-icon"></i>
                             <span class="menu-title">Les Absences</span>
                         </a>
                     </li>
@@ -88,51 +94,72 @@ session_start();
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
-                    <!-- hon el content li bl nos-->
                     <table class="table table-striped">
                         <?php
+                        require('../../../BLL/presencesManager.php');
                         require('../../../BLL/usersManager.php');
                         require('../../../BLL/coursManager.php');
-                        $u = new user();
-                        $u = unserialize($_SESSION['loggeduser']);
-                        $presences = getPresence($u->getId());
-                        echo
-                        "<thead>" .
-                            "<tr>" .
-                            "<th>" .
-                            "Abreviation" .
-                            "</th>" .
-                            "<th>" .
-                            "Nom" .
-                            "</th>" .
-                            "<th>" .
-                            "Status" .
-                            "</th>" .
-                            "<th>" .
-                            "Date" .
-                            "</th>" .
-                            "</tr>" .
-                            "</thead>";
-                        if ($presences != null)
-                            for ($i = 0; $i < count($presences); $i++) {
-                                echo "<tr>"
-                                    . "<td>" . getCoursbyId($presences[$i]->getCourId())->getAbreviation() . "</td>"
-                                    . "<td>" . getCoursbyId($presences[$i]->getCourId())->getNom() . "</td>"
-                                    . "<td>" . $presences[$i]->getStatus() . "</td>"
-                                    . "<td>" . $presences[$i]->getDate() . "</td>"
-                                    . "</tr>";
-                            }
                         ?>
+                        <form method="POST">
+                            <?php
+                            $courses = getPresenceByCours($id);
+                            echo
+                            "<thead>" .
+                                "<tr>" .
+                                "<th>" .
+                                "Nom" .
+                                "</th>" .
+                                "<th>" .
+                                "Prenom" .
+                                "</th>" .
+                                "<th>" .
+                                "Status" .
+                                "</th>" .
+                                "<th>" .
+                                "Date" .
+                                "</th>" .
+                                "<th>" .
+                                "P<=>A" .
+                                "</th>" .
+                                "</tr>" .
+                                "</thead>";
+                            if ($courses != null) {
+                                $c = getCoursbyId($id);
+                                echo "<h3>" . $c->getNom() . ":</h3> ";
+                                for ($i = 0; $i < count($courses); $i++) {
+                                    $s = UserByid($courses[$i]->getEtudiantId());
+
+                                    echo "<tr>"
+                                        . "<td>" . $s->getNom() . "</td>"
+                                        . "<td>" . $s->getPrenom() . "</td>"
+                                        . "<td>" . $courses[$i]->getStatus() . "</td>"
+                                        . "<td>" . $courses[$i]->getDate() . "</td>"
+                                        . "<td><button name='sbmtBtn' value='" . $courses[$i]->getEtudiantId() . "'>Changer</button></td>"
+                                        . "</tr>";
+                                    if (isset($_POST["sbmtBtn"])) {
+                                        $pres = new presence();
+                                        $pres->setEtudiantId($_POST["sbmtBtn"]);
+                                        $pres->setCourId($id);
+                                        $pres->setDate($courses[$i]->getDate());
+                                        if ($courses[$i]->getStatus() == "A") {
+                                            $pres->setStatus("P");
+                                        } else {
+                                            $pres->setStatus("A");
+                                        }
+                                        updateStatus($pres);
+                                        echo "<script type='text/javascript'>"
+                                            . " window.location.href='absence.php?id_formation=" . $id_formation . "&id=" . $id . "'"
+                                            . "</script>";
+                                    }
+                                }
+                            }
+                            ?>
+                        </form>
                     </table>
                 </div>
             </div>
-            <nav class="sidebar calendarbar" id="sidebar">
-                <form action="#" class="row">
-                    <div class="col-md-12">
-                        <div id="inline_cal"></div>
-                    </div>
-                </form>
         </div>
+    </div>
     </div>
 
     <!-- plugins:js lal profile-->

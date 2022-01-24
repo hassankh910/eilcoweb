@@ -63,6 +63,10 @@ function getAllGI()
 {
     return CountIndu();
 }
+
+function getAllSecretaire(){
+    return CountSec();
+}
 function UpdatePassword($user_id,$pass)
 {
         return UpdatePass($user_id,$pass);    

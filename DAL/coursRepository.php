@@ -154,7 +154,7 @@ function getCoursbyProfId($prof_id)
 
     $cours = null;
 
-    $query = "select* from users  ,cours where users.iduser=? and users.role=3;";
+    $query = "select cours.* from cours where cours.prof_id=?;";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $prof_id);
     $stmt->execute();

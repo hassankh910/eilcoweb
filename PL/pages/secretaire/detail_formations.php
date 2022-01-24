@@ -64,7 +64,7 @@ $id = $_GET['id'];
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="edt.php">
+                        <a class="nav-link" <?php echo "href='edt.php?id=".$id."'"?>>
                             <i class="ti-user menu-icon"></i>
                             <span class="menu-title">Emploi de temps </span>
                         </a>
@@ -72,75 +72,70 @@ $id = $_GET['id'];
 
                     <li class="nav-item">
                         <?php
-                        $u=unserialize($_SESSION['loggeduser']);
-                        
-                        echo 
-                        "<a class=nav-link href='View_cours.php?id=". $id
-                            ."'>"
-                            ."<i class=ti-book menu-icon></i>"
-                            ."<span class=menu-title>Les Cours</span>"
-                            ."</a>";
-                            ?>
-                        
+                        echo
+                        "<a class=nav-link href='View_cours.php?id=" . $id
+                            . "'>"
+                            . "<i class='ti-book menu-icon'></i>"
+                            . "<span class=menu-title>Les Cours</span>"
+                            . "</a>";
+                        ?>
+
                     </li>
                 </ul>
             </nav>
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
-                <div class="table-responsive">
-                                        
+                    <div class="table-responsive">
 
-                                        <form method="POST">
-                                            <table class="table table-striped">
-                                                <?php
-                                                require_once('../../../BLL/coursManager.php');
-                                                include_once("../../../DTO/cour.php");
-                                                include_once("../../../DTO/user.php");
-                                                require_once('../../../BLL/usersManager.php');
-                                                require_once('../../../BLL/formationManager.php');
-                                                $profiles = GetUsersbyFormationdetail($id);
-                                                if ($profiles == null) {
-                                                    echo "no results";
-                                                } else {
-                                                    echo
-                                                    "<thead>" .
-                                                    "<tr>" .
-                                                    "<th>" .
-                                                    "Nom" .
-                                                    "</th>" .
-                                                    "<th>" .
-                                                    "Prenom" .
-                                                    "</th>" .
-                                                    "<th>" .
-                                                    "email personel" .
-                                                    "</th>" .
-                                                    "<th>" .
-                                                    "email universitaire" .
-                                                    "</th>" .
-                                                    "<th>" .
-                                                    "</tr>" .
-                                                    "</thead>";
 
-                                                    for ($i = 0; $i < count($profiles); $i++) {
-                                                        
-                                                        echo
-                                                        "<tr>"
-                                                            . "<td>" . $profiles[$i]->getNom() . "</td>"
-                                                            . "<td>" . $profiles[$i]->getPrenom() . "</td>"
-                                                            . "<td>" . $profiles[$i]->getEmail_personel() . "</td>"
-                                                            . "<td>" . $profiles[$i]->getEmail_universitaire() . "</td>"
-                                                            . "</tr>";
-                                                    }
-                                                    echo"<h6>" ."Les étudiants des ".GetFormationname($id)." sont : ".count($profiles)." </h6>";
-                                            
+                        <form method="POST">
+                            <table class="table table-striped">
+                                <?php
+                                require_once('../../../BLL/coursManager.php');
+                                include_once("../../../DTO/cour.php");
+                                include_once("../../../DTO/user.php");
+                                require_once('../../../BLL/usersManager.php');
+                                require_once('../../../BLL/formationManager.php');
+                                $profiles = GetUsersbyFormationdetail($id);
+                                if ($profiles == null) {
+                                    echo "no results";
+                                } else {
+                                    echo
+                                    "<thead>" .
+                                        "<tr>" .
+                                        "<th>" .
+                                        "Nom" .
+                                        "</th>" .
+                                        "<th>" .
+                                        "Prenom" .
+                                        "</th>" .
+                                        "<th>" .
+                                        "email personel" .
+                                        "</th>" .
+                                        "<th>" .
+                                        "email universitaire" .
+                                        "</th>" .
+                                        "<th>" .
+                                        "</tr>" .
+                                        "</thead>";
 
-                                                }
-                                                ?>
-                                            </table>
-                                            
-                                        </form>
-                                    </div>
+                                    for ($i = 0; $i < count($profiles); $i++) {
+
+                                        echo
+                                        "<tr>"
+                                            . "<td>" . $profiles[$i]->getNom() . "</td>"
+                                            . "<td>" . $profiles[$i]->getPrenom() . "</td>"
+                                            . "<td>" . $profiles[$i]->getEmail_personel() . "</td>"
+                                            . "<td>" . $profiles[$i]->getEmail_universitaire() . "</td>"
+                                            . "</tr>";
+                                    }
+                                }
+                                ?>
+                            </table>
+
+                        </form>
+                    </div>
                 </div>
             </div>
             <nav class="sidebar calendarbar" id="sidebar">

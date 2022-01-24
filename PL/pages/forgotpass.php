@@ -20,6 +20,8 @@ session_start();
 
     <link rel="stylesheet" type="text/css" href="../styles/utils.css">
     <link rel="stylesheet" type="text/css" href="../styles/main.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
 </head>
 
 <body>
@@ -46,6 +48,7 @@ session_start();
                 <form class="login100-form validate-form" method="POST">
 
                     <div class="wrap-input100 validate-input" data-validate="Enter Email">
+                    <i class="fa fa-envelope-open	"	></i>
                         <input class="input100" type="email" name="email" placeholder="Email Personnel" autocomplete="off">
                     </div>
 

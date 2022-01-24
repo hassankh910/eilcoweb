@@ -1,5 +1,6 @@
 <?php
 session_start();
+$id = $_GET["id"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +39,7 @@ session_start();
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                             <a class="dropdown-item" href='../profile.php'>
-                                <i class="ti-user text-primary"></i> Profile
+                                <i class="ti-settings text-primary"></i> Profile
                             </a>
                             <a class="dropdown-item" href="../logout.php">
                                 <i class="ti-power-off text-primary"></i> Logout
@@ -63,60 +64,144 @@ session_start();
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="edt.php">
+                        <a class="nav-link" <?php echo "href='edt.php?id=" . $id . "'" ?>>
                             <i class="ti-user menu-icon"></i>
                             <span class="menu-title">Emploi de temps </span>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="cours.php">
+                        <a class="nav-link" <?php echo "href='View_cours.php?id=" . $id . "'"; ?>>
                             <i class="ti-book menu-icon"></i>
                             <span class="menu-title">Les Cours</span>
                         </a>
                     </li>
-
-                   
                 </ul>
             </nav>
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper" style="padding: 2%;">
                     <!-- hon el content li bl nos-->
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-md-5 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <?php
 
-                    <div id='calendar'></div>
-                    
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function() {
-                            var calendarEl = document.getElementById("calendar");
+                                        require_once("../../../BLL/coursManager.php");
+                                        require_once("../../../BLL/edtManager.php");
+                                        include_once("../../../DTO/edt.php");
+                                        if (isset($_POST['submitBtn'])) {
+                                            try {
+                                                $edt = new edt();
+                                                $edt->setCours_Id($_POST['cour']);
+                                                $edt->setStartDate($_POST['date_debut']);
+                                                $edt->setStartTime($_POST['temp_debut']);
+                                                $edt->setEndDate($_POST['date_fin']);
+                                                $edt->setEndTime($_POST['temp_fin']);
 
-                            var calendar = new FullCalendar.Calendar(calendarEl, {
-                                initialView: "dayGridMonth",
-                                initialDate: Date.now(),
-                                headerToolbar: {
-                                    left: "prev,next today",
-                                    center: "title",
-                                    right: "dayGridMonth,timeGridWeek,timeGridDay"
-                                },
-                                events: [<?php
-                                            require("../../../BLL/coursManager.php");
-                                            require("../../../BLL/edtManager.php");
-                                            require("../../../DTO/edt.php");
-                                            $edts = edtbyformation(unserialize($_SESSION['loggeduser'])->getFormationId());
-                                            for ($i = 0; $i < count($edts); $i++) {
-                                                $cour = getCoursbyId($edts[$i]->getCours_Id());
-                                                echo "{"
-                                                    . "title: '" . $cour->getNom() . "',"
-                                                    . "start: '" . $edts[$i]->getStartDate() . "T" . $edts[$i]->getStartTime() . "',"
-                                                    . "end: '" . $edts[$i]->getEndDate() . "T" . $edts[$i]->getEndTime() . "'},";
+                                                if (addedt($edt->getCours_Id(), $edt->getStartDate() . " " . $edt->getStartTime(), $edt->getEndDate() . " " . $edt->getEndTime())) {
+                                                    echo "<script type='text/javascript'>"
+                                                        . " window.location.href='edt.php?id=" . $id . "';"
+                                                        . " </script> ";
+                                                } else {
+                                                    echo "<script type='text/javascript'>"
+                                                        . " window.location.href='edt.php?id=" . $id . "';"
+                                                        . " </script> ";
+                                                }
+                                            } catch (Exception $exc) {
+                                                echo $exc->getTraceAsString();
                                             }
-                                            echo "{}";
-                                            ?>]
-                            });
+                                        } else {
+                                        }
+                                        ?>
+                                        <form class="forms-sample" method="POST">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <select class="select" name="cour">
+                                                        <?php
+                                                        $profs = getCoursbyFormationIddetails($id);
+                                                        echo "<option value=" . '"' . "0" . '"' . ">" . "Cours" . "</option>";
+                                                        if ($profs != null) {
+                                                            for ($i = 0; $i < count($profs); $i++) {
+                                                                echo "<option value=" . '"' . $profs[$i]->getId() . '"' . ">" . $profs[$i]->getNom() . "</option>";
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Debut</label>
+                                                    <input type="date" class="form-control" name="date_debut">
+                                                    <input type="time" class="form-control" name="temp_debut">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Fin</label>
+                                                    <input type="date" class="form-control" name="date_fin">
+                                                    <input type="time" class="form-control" name="temp_fin">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary mr-2" name="submitBtn">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
 
-                            calendar.render();
-                        });
-                    </script>
+
+
+
+
+                            <div class="col-md-7 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <?php
+                                                require_once("../../../BLL/formationManager.php");
+                                                $formations = edtbyformation($id);
+                                                if ($formations == null) {
+                                                    echo "no results";
+                                                } else {
+                                                    if (isset($_POST['deleteBtn'])) {
+                                                        if (deleteedt($_POST['deleteBtn'])) {
+                                                            echo "<script type='text/javascript'>"
+                                                                . " window.location.href='edt.php?id=" . $id . "';"
+                                                                . " </script> ";
+                                                        } else {
+                                                            echo "<script type='text/javascript'>"
+                                                                . " window.location.href='edt.php?id=" . $id . "';"
+                                                                . "alert('Delete Failed');"
+                                                                . " </script> ";
+                                                        }
+                                                    }
+
+                                                    echo
+                                                    "<tr>"
+                                                        . "<th>" . "Cours" . "</th>"
+                                                        . "<th>" . "Debut" . "</th>"
+                                                        . "<th>" . "Fin" . "</th>"
+                                                        . "<th>Delete</th>"
+                                                        . "</tr>";
+
+                                                    for ($i = 0; $i < count($formations); $i++) {
+                                                        echo
+                                                        "<tr>"
+                                                            . "<td>" . getCoursbyId($formations[$i]->getCours_Id())->getNom() . "</td>"
+                                                            . "<td>" . $formations[$i]->getStartDate() . " " . $formations[$i]->getStartTime() . "</td>"
+                                                            . "<td>" . $formations[$i]->getEndDate() . " " . $formations[$i]->getEndTime() . "</td>"
+                                                            . "<td><form method='POST'><button class='btn btn-link' name='deleteBtn' value='" . $formations[$i]->getId() . "'><i class='ti-trash '></i></button></form></td>"
+                                                            . "</tr>";
+                                                    }
+                                                }
+                                                ?>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <nav class="sidebar calendarbar" id="sidebar">

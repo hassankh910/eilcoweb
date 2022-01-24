@@ -80,14 +80,14 @@ session_start();
                                     echo
                                     "<p><b>Nom: </b> " . $prof->getNom() . "</p>"
                                         . "<p><b>Prenom: </b>" . $prof->getPrenom() . "</p>"
-                                        . "<p><b>Username: </b>" . $prof->getUsername() . "</p>"
-                                        . "<p><b>Email Universitaire: </b>" . $prof->getEmail_universitaire() . "</p>"
-                                        . "<p><b>Email Personel: </b>" . $prof->getEmail_personel() . "</p>"
+                                        . "<p><b>Nom d'utilisateur: </b>" . $prof->getUsername() . "</p>"
+                                        . "<p><b>Courriel universitaire: </b>" . $prof->getEmail_universitaire() . "</p>"
+                                        . "<p><b>Courriel personnel: </b>" . $prof->getEmail_personel() . "</p>"
                                         . "<p><b>Date De Naissance: </b> " . $prof->getDate_de_naissance() . "</p>"
-                                        . "<p><b>Phone: </b>" . $prof->getPhone() . "</p>"
+                                        . "<p><b>N° Téléphone portable: </b>" . $prof->getPhone() . "</p>"
                                         . "<p><b>Formation: </b>" . GetFormationname($prof->getFormationId()) . "</p>"
                                         . "<p><b>Nationnalite: </b>" . $prof->getNationalite()  . "</p>"
-                                        . "<p><b>Address: </b>" . $prof->getAdresse()  . "</p>";
+                                        . "<p><b>Adresse: </b>" . $prof->getAdresse()  . "</p>";
                                     ?>
                                 </div>
                             </div>
@@ -128,13 +128,13 @@ session_start();
                                     }
                                     ?>
                                     <form method="POST">
-                                        <h3>Modifier du mot de Pass</h3>
-                                        <p>Old Password</p>
+                                        <h3>Modifier le mot de passe</h3>
+                                        <p>Ancien mot de passe</p>
                                         <input type="password" name="oldPass" />
                                         <hr>
-                                        <p>New Password</p>
+                                        <p>Nouveau mot de passe</p>
                                         <input type="password" name="newpass" />
-                                        <p>Comfirm Password</p>
+                                        <p>Confirmer mot de passe</p>
                                         <input type="password" name="comfpass" />
                                         <br>
 

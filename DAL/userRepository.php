@@ -389,7 +389,7 @@ function deleteUserbyId($iduser)
 function getAllStudentsbycours($cours_id)
 {
     $conn = openConnection();
-    $query = "SELECT *   from users  ,cours where users.formation_id=cours.formation_id  and cours.idcours= ? and users.role=2";
+    $query = "SELECT users.*   from users,cours where users.formation_id=cours.formation_id  and cours.idcours= ? and users.role=2";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $cours_id);
     $stmt->execute();
@@ -583,4 +583,28 @@ function UpdatePass($user_id,$pass)
     } catch (Exception $ex) {
     }
     return $updateResponse;
+}
+
+function CountSec()
+{
+    $conn = openConnection();
+    $nbsec = 0;
+
+    try {
+        $sql = "SELECT Count(*) as nbsec from users where role=4"; // SQL with parameters
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) == false) {
+            closeConnection($conn);
+            return null;
+        }
+
+        if ($result->num_rows > 0) {
+            if ($row = $result->fetch_assoc()) {
+                $nbsec = ($row["nbsec"]);
+            }
+        }
+        closeConnection($conn);
+    } catch (Exception $ex) {
+    }
+    return $nbsec;
 }

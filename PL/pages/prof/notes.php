@@ -31,7 +31,7 @@ $cours_id = $_GET["id"];
                 <ul class="navbar-nav navbar-nav-right">
 
                     <li class="nav-item nav-profile dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
                             <?php
                             require("../../../DTO/user.php");
                             echo "<h3>" . unserialize($_SESSION['loggeduser'])->getUsername() . "</h3>";
@@ -59,7 +59,7 @@ $cours_id = $_GET["id"];
                     <li class="nav-item">
                         <a class="nav-link" href="prof_page.php">
                             <i class="ti-home menu-icon"></i>
-                            <span class="menu-title">Home</span>
+                            <span class="menu-title">Mes Cours</span>
                         </a>
                     </li>
 
@@ -83,10 +83,12 @@ $cours_id = $_GET["id"];
                         ?>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="upload.php">
-                            <i class="ti-import menu-icon"></i>
-                            <span class="menu-title">Documents</span>
-                        </a>
+                        <?php
+                        echo "<a class='nav-link' href='documents.php?id=" . $cours_id . "'>"
+                            . "<i class='ti-import menu-icon'></i>"
+                            . "<span class='menu-title'>Documents</span>"
+                            . "</a>"
+                        ?>
                     </li>
                 </ul>
             </nav>

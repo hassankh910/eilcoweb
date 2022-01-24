@@ -13501,9 +13501,7 @@ dl li {
     margin-left: 0.5rem;
     display: flex;
     flex-wrap: wrap;
-    /* width: 100%; */
-    /* display: flex; */
-    /* justify-content: center; */
+
 }
 
 .adminstyle h3{
@@ -13521,25 +13519,29 @@ dl li {
 }
 
 .boxes-card {
-    /* margin-left: 1rem; */
-    /* margin-top: 1rem; */
+
     display: flex;
     justify-content: center;
     flex-direction: row;
     flex-grow: 1;
 }
-
-.card.tale-bg {
-    background: blue;
+.textpos {
+    position: absolute;
+    top: 8px;
+    text-align: center;
+    left: 36%;
+}
+.textpos p{
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
 }
 
 .card-people {
     position: relative;
-    padding-top: 20px;
 }
 
 .card-people img {
-    border-radius: 20px;
     width: 100%;
 }
 

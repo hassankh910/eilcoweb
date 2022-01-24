@@ -51,62 +51,59 @@
         </nav>
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
-            <nav class="sidebar sidebar-offcanvas" id="sidebar">
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="./admin_page.php">
-                            <i class="ti-home menu-icon"></i>
-                            <span class="menu-title">Home</span>
-                        </a>
-                    </li>
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="./admin_page.php">
+              <i class="ti-home menu-icon"></i>
+              <span class="menu-title">Acceuil</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+              <i class="ti-user menu-icon"></i>
+              <span class="menu-title">Utilisateur </span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="./AddStudent.php">Ajouter un etudiant </a></li>
+                <li class="nav-item"> <a class="nav-link" href="./AddProf.php">Ajouter un professeur </a></li>
+                <li class="nav-item"> <a class="nav-link" href="./AddSecretaire.php">Ajouter un secretaire  </a></li>
+                <li class="nav-item"> <a class="nav-link" href="./ViewUsers.php">Voire les utilisateurs </a></li>
+
+              </ul>
+            </div>
+          </li>
 
 
-
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                            <i class="ti-user menu-icon"></i>
-                            <span class="menu-title">User </span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="auth">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="./AddStudent.php">Add Student </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="./AddProf.php">Add Prof </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="./AddSecretaire.php">Add Secretaire </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="./ViewUsers.php">View Users </a></li>
-
-                            </ul>
-                        </div>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#auth1" aria-expanded="false" aria-controls="auth">
-                            <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Cours</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="auth1">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="./AddCourse.php">Add Cours </a></li>
-                                <li class="nav-item"> <a class="nav-link" href="./ViewCourses.php"> View Courses </a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#auth2" aria-expanded="false" aria-controls="auth">
-                            <i class="ti-book menu-icon"></i>
-                            <span class="menu-title">Formations</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="auth2">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="./AddFormation.php">Add Formation </a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth1" aria-expanded="false" aria-controls="auth">
+              <i class="ti-book menu-icon"></i>
+              <span class="menu-title">Cours</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth1">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="./AddCourse.php">Ajouter un cour </a></li>
+                <li class="nav-item"> <a class="nav-link" href="./ViewCourses.php"> Voir les cours</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth2" aria-expanded="false" aria-controls="auth">
+              <i class="ti-book menu-icon"></i>
+              <span class="menu-title">Formations</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth2">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="./AddFormation.php">Ajouter une formation</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </nav>
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
@@ -147,7 +144,7 @@
                         <div class="col-md-5 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4>Add Formation</h4>
+                                    <h4>Ajouter une formation</h4>
                                     <?php
 
                                     include_once("../../../DTO/formation.php");

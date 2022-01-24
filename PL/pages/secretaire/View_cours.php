@@ -1,6 +1,6 @@
 <?php
 session_start();
-$id=$_GET["id"];
+$id = $_GET["id"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +37,7 @@ $id=$_GET["id"];
                             ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" href='../profile.php'>
                                 <i class="ti-settings text-primary"></i> Profile
                             </a>
                             <a class="dropdown-item" href="../logout.php">
@@ -63,14 +63,14 @@ $id=$_GET["id"];
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="edt.php">
+                        <a class="nav-link" <?php echo "href='edt.php?id=" . $id . "'" ?>>
                             <i class="ti-user menu-icon"></i>
                             <span class="menu-title">Emploi de temps </span>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" <?php echo "href='View_cours.php?id=".$id."'"; ?>>
+                        <a class="nav-link" <?php echo "href='View_cours.php?id=" . $id . "'"; ?>>
                             <i class="ti-book menu-icon"></i>
                             <span class="menu-title">Les Cours</span>
                         </a>
@@ -82,33 +82,33 @@ $id=$_GET["id"];
                 <div class="content-wrapper">
                     <!-- hon el content li bl nos-->
                     <div class="form-group">
-                    <?php
-                    require('../../../BLL/coursManager.php');
-                    require("../../../DTO/formation.php");
+                        <?php
+                        require('../../../BLL/coursManager.php');
+                        require("../../../DTO/formation.php");
 
-                    $courses = getCoursbyFormationIddetails($id) ;
-                    echo "<div class='course-panel row'>";
-                    if ($courses != null)
-                    
-                        for ($i = 0; $i < count($courses); $i++) {
-                            echo "<div class='card col-md-4' style='width: 18rem;'>"
-                                . "<a href='cours.php?id=" . $courses[$i]->getId() . "&id_formation=".$id."' style='color: black; text-decoration: none; cursor: pointer'>"
-                                . "<div class='res-circle'>"
-                                . "<div class='circle-txt'>" . $courses[$i]->getAbreviation() . "</div>"
-                                . "</div>"
-                                . "<div class='card-body'>"
-                                . "<p class='card-text'>" . $courses[$i]->getNom() . "</p>"
-                                . "</div>"
-                                . "</a>"
-                                . "</div>";
-                        }
-                    
-                    echo "</div>"
-                    
-                    ?>
-                    </select>
+                        $courses = getCoursbyFormationIddetails($id);
+                        echo "<div class='course-panel row'>";
+                        if ($courses != null)
+
+                            for ($i = 0; $i < count($courses); $i++) {
+                                echo "<div class='card col-md-4' style='width: 18rem;'>"
+                                    . "<a href='cours.php?id=" . $courses[$i]->getId() . "&id_formation=" . $id . "' style='color: black; text-decoration: none; cursor: pointer'>"
+                                    . "<div class='res-circle'>"
+                                    . "<div class='circle-txt'>" . $courses[$i]->getAbreviation() . "</div>"
+                                    . "</div>"
+                                    . "<div class='card-body'>"
+                                    . "<p class='card-text'>" . $courses[$i]->getNom() . "</p>"
+                                    . "</div>"
+                                    . "</a>"
+                                    . "</div>";
+                            }
+
+                        echo "</div>"
+
+                        ?>
+                        </select>
                     </div>
-                    
+
                 </div>
             </div>
             <nav class="sidebar calendarbar" id="sidebar">

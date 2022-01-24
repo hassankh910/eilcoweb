@@ -20,6 +20,8 @@ session_start();
 
     <link rel="stylesheet" type="text/css" href="styles/utils.css">
     <link rel="stylesheet" type="text/css" href="styles/main.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
 </head>
 
 <body>
@@ -79,7 +81,7 @@ session_start();
                         <img class="logo-img m-b-20" src="assets/images/eilco-logo.png" alt="logo de l'eilco">
                     </span>
                     <div class="wrap-input100 validate-input" data-validate="Enter username">
-                        <i class="fa fa-user"></i>
+                        <i class="fa fa-user"	></i>
                         <input class="input100" type="text" name="username" placeholder="Nom d'utilisateur" autocomplete="off">
                     </div>
 

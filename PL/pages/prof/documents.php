@@ -58,7 +58,7 @@ $cours_id = $_GET["id"];
                     <li class="nav-item">
                         <a class="nav-link" href="prof_page.php">
                             <i class="ti-home menu-icon"></i>
-                            <span class="menu-title">Home</span>
+                            <span class="menu-title">Mes Cours</span>
                         </a>
                     </li>
 
@@ -161,7 +161,7 @@ $cours_id = $_GET["id"];
                         }
 
                         // Check file size
-                        if ($_FILES["fileToUpload"]["size"] > 500000) {
+                        if ($_FILES["fileToUpload"]["size"] > 99999999999999) {
                             echo "<script>alert('Sorry, your file is too large.')</script>";
                             $uploadOk = 0;
                         }
@@ -191,9 +191,9 @@ $cours_id = $_GET["id"];
                     }
                     ?>
                     <form method="post" enctype="multipart/form-data">
-                        Select document to upload:
+                    Sélectionner le document à télécharger:
                         <input type="file" name="fileToUpload" id="fileToUpload">
-                        <input type="submit" value="Upload Image" name="submit">
+                        <input type="submit" value="Envoyer" name="submit">
                     </form>
                 </div>
             </div>

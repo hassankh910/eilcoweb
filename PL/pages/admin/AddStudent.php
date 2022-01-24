@@ -54,24 +54,21 @@
           <li class="nav-item">
             <a class="nav-link" href="./admin_page.php">
               <i class="ti-home menu-icon"></i>
-              <span class="menu-title">Home</span>
+              <span class="menu-title">Acceuil</span>
             </a>
           </li>
-
-
-
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
               <i class="ti-user menu-icon"></i>
-              <span class="menu-title">User </span>
+              <span class="menu-title">Utilisateur </span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="./AddStudent.php">Add Student </a></li>
-                <li class="nav-item"> <a class="nav-link" href="./AddProf.php">Add Prof </a></li>
-                <li class="nav-item"> <a class="nav-link" href="./AddSecretaire.php">Add Secretaire </a></li>
-                <li class="nav-item"> <a class="nav-link" href="./ViewUsers.php">View Users </a></li>
+                <li class="nav-item"> <a class="nav-link" href="./AddStudent.php">Ajouter un etudiant </a></li>
+                <li class="nav-item"> <a class="nav-link" href="./AddProf.php">Ajouter un professeur </a></li>
+                <li class="nav-item"> <a class="nav-link" href="./AddSecretaire.php">Ajouter un secretaire </a></li>
+                <li class="nav-item"> <a class="nav-link" href="./ViewUsers.php">Voire les utilisateurs </a></li>
 
               </ul>
             </div>
@@ -86,8 +83,8 @@
             </a>
             <div class="collapse" id="auth1">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="./AddCourse.php">Add Cours </a></li>
-                <li class="nav-item"> <a class="nav-link" href="./ViewCourses.php"> View Courses </a></li>
+                <li class="nav-item"> <a class="nav-link" href="./AddCourse.php">Ajouter un cour </a></li>
+                <li class="nav-item"> <a class="nav-link" href="./ViewCourses.php"> Voir les cours</a></li>
               </ul>
             </div>
           </li>
@@ -99,7 +96,7 @@
             </a>
             <div class="collapse" id="auth2">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="./AddFormation.php">Add Formation </a></li>
+                <li class="nav-item"> <a class="nav-link" href="./AddFormation.php">Ajouter une formation</a></li>
               </ul>
             </div>
           </li>
@@ -127,7 +124,7 @@
                     $sexe = $_POST['sexe'];
                     $formation_id = $_POST['formation'];
                     $phone = $_POST['phone'];
-                    $Adresse = $_POST['Adresse'] . $_POST['ComplementAdresse'];
+                    $Adresse = $_POST['Adresse'] ." ". $_POST['ComplementAdresse'];
                     $nationalite = $_POST['nationalite'];
 
                     try {
@@ -170,7 +167,7 @@
                     </div>
 
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Email Personel</label>
+                      <label for="exampleInputEmail1">Courriel Personnel</label>
                       <input type="email" class="form-control" name="email_personel" placeholder="Email">
                     </div>
                     <div class="form-group">
@@ -178,7 +175,7 @@
                       <input type="date" class="form-control" name="date_de_naissance" name="birthday">
                     </div>
                     <div class="form-group">
-                      <label for="phone">Phone</label>
+                      <label for="phone">N° Téléphone portable </label>
                       <input type="text" class="form-control" name="phone" placeholder="Phone number">
                     </div>
                 </div>
